@@ -23,6 +23,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
@@ -38,12 +39,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.critter_clicker.ui.theme.Critter_clickerTheme
 
+import com.example.critter_clicker.data.SettingsViewModel
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,8 +73,8 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun AnimatedImageButton(onClick: () -> Unit) {
-    var isClicked by remember { mutableStateOf(false) }
+fun AnimatedImageButton(imageId : Int, imageSize : Int, onClick: () -> Unit) {
+    var isClicked by rememberSaveable { mutableStateOf(false) }
 
     val scale by animateFloatAsState(
         targetValue = if (isClicked) 0.85f else 1f,
@@ -78,10 +83,10 @@ fun AnimatedImageButton(onClick: () -> Unit) {
     )
 
     Image(
-        painter = painterResource(),
+        painter = painterResource(imageId),
         contentDescription = "Click me",
         modifier = Modifier
-            .size(200.dp)
+            .size(imageSize.dp)
             .scale(scale)
             .pointerInput(Unit) {
                 detectTapGestures(
@@ -97,8 +102,9 @@ fun AnimatedImageButton(onClick: () -> Unit) {
 }
 
 @Composable
-fun MainScreen() {
-    var clicks by rememberSaveable { mutableIntStateOf(0) }
+fun MainScreen(viewModel: SettingsViewModel = viewModel()) {
+    var clicks by remember { mutableIntStateOf(0) }
+    val settingsState by viewModel.settingsState.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
@@ -108,15 +114,8 @@ fun MainScreen() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = "Critter Clicker", fontSize = 24.sp)
-        Text(text = "Clicks: $clicks", fontSize = 18.sp)
-        AnimatedImageButton(onClick = { clicks++ })
+        Text(text = "Clicks: ${settingsState.totalCookies}", fontSize = 18.sp)
+        AnimatedImageButton(R.drawable.cauldron, 100, onClick = { viewModel.updateCookies( settingsState.totalCookies + 1 )})
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun MainPreview() {
-    Critter_clickerTheme {
-        MainScreen()
-    }
-}
