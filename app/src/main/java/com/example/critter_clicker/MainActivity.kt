@@ -18,10 +18,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Pets
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -49,6 +59,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.critter_clicker.ui.theme.Critter_clickerTheme
 
 import com.example.critter_clicker.data.SettingsViewModel
+import com.example.critter_clicker.screens.AppScreens
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,15 +67,42 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController: NavHostController = rememberNavController()
             Critter_clickerTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    topBar = {
+
+                    },
+                    bottomBar = {
+                        BottomBar(navController)
+                    },
+                ) { innerPadding ->
                     NavHost(
                         navController = navController,
-                        startDestination = "main",
+                        startDestination = AppScreens.Cauldron.name,
                         modifier = Modifier.padding(innerPadding)
                     ) {
-                        composable(route = "main") {
+                        //Pets screen
+                        composable(route = AppScreens.Pets.name) {
+
+                        }
+                        //Shop screen
+                        composable(route = AppScreens.Shop.name) {
+
+                        }
+                        //Cauldron screen
+                        composable(route = AppScreens.Cauldron.name) {
                             MainScreen()
                         }
+                        //Stats screen
+                        composable(route = AppScreens.Stats.name) {
+
+                        }
+                        //Settings screen
+                        composable(route = AppScreens.Settings.name) {
+
+                        }
+
+
                     }
                 }
             }
@@ -119,3 +157,70 @@ fun MainScreen(viewModel: SettingsViewModel = viewModel()) {
     }
 }
 
+//Composable for the Bottom
+@Composable
+fun BottomBar(navController : NavHostController){
+    var selected by rememberSaveable { mutableIntStateOf(3) }
+    NavigationBar {
+        //Navigate to the Pets Screen
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.Pets , contentDescription = AppScreens.Pets.name) },
+            label = { Text(AppScreens.Pets.name) },
+            selected = selected == 1,
+            onClick = {
+                selected = 1
+                navController.navigate(AppScreens.Pets.name) {
+                    popUpTo(AppScreens.Pets.name) { inclusive = true }
+                }
+            }
+        )
+        //Navigate to the Shop Screen
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.ShoppingCart, contentDescription = AppScreens.Shop.name) },
+            label = { Text(AppScreens.Shop.name) },
+            selected = selected == 2,
+            onClick = {
+                selected = 2
+                navController.navigate(AppScreens.Shop.name) {
+                    popUpTo(AppScreens.Shop.name) { inclusive = true }
+                }
+            }
+        )
+        //Navigate to the Cauldron Screen
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.Home, contentDescription = AppScreens.Cauldron.name) },
+            label = { Text(AppScreens.Cauldron.name) },
+            selected = selected == 3,
+            onClick = {
+                selected = 3
+                navController.navigate(AppScreens.Cauldron.name) {
+                    popUpTo(AppScreens.Cauldron.name) { inclusive = true }
+                }
+            }
+        )
+        //Navigate to the Stats Screen
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.Star, contentDescription = AppScreens.Stats.name) },
+            label = { Text(AppScreens.Stats.name) },
+            selected = selected == 4,
+            onClick = {
+                selected = 4
+                navController.navigate(AppScreens.Stats.name) {
+                    popUpTo(AppScreens.Stats.name) { inclusive = true }
+                }
+            }
+        )
+        //Navigate to the Settings Screen
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.Settings, contentDescription = AppScreens.Settings.name) },
+            label = { Text(AppScreens.Settings.name) },
+            selected = selected == 5,
+            onClick = {
+                selected = 5
+                navController.navigate(AppScreens.Settings.name) {
+                    popUpTo(AppScreens.Settings.name) { inclusive = true }
+                }
+            }
+        )
+    }
+}
