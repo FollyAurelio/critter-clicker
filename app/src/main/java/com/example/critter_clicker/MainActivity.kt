@@ -25,6 +25,8 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -32,6 +34,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -44,6 +47,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -60,6 +64,7 @@ import com.example.critter_clicker.ui.theme.Critter_clickerTheme
 
 import com.example.critter_clicker.data.SettingsViewModel
 import com.example.critter_clicker.screens.AppScreens
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,7 +75,7 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     topBar = {
-
+                        TopBar()
                     },
                     bottomBar = {
                         BottomBar(navController)
@@ -111,7 +116,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun AnimatedImageButton(imageId : Int, imageSize : Int, onClick: () -> Unit) {
+fun AnimatedImageButton(imageId: Int, imageSize: Int, onClick: () -> Unit) {
     var isClicked by rememberSaveable { mutableStateOf(false) }
 
     val scale by animateFloatAsState(
@@ -144,7 +149,39 @@ fun MainScreen(viewModel: SettingsViewModel = viewModel()) {
     var clicks by remember { mutableIntStateOf(0) }
     val settingsState by viewModel.settingsState.collectAsStateWithLifecycle()
 
-    Column(
+
+    AnimatedImageButton(
+        R.drawable.cauldron,
+        100,
+        onClick = { viewModel.updateCookies(settingsState.totalCookies + 1) })
+
+}
+
+//Composable for the Top Bar
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TopBar() {
+    CenterAlignedTopAppBar(
+        title = {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text("Critter Clicker")
+                Row() {
+                    AnimatedImageButton(R.drawable.cookie, 32, {})
+                    Text("Cookies : 234234234")
+                    AnimatedImageButton(R.drawable.cookie, 32, {})
+                }
+            }
+        },
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+            containerColor = Color(0xFF1A1A2E), // background
+            titleContentColor = Color.White      // title color
+        ),
+
+
+        )
+
+
+    /*Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
@@ -152,19 +189,19 @@ fun MainScreen(viewModel: SettingsViewModel = viewModel()) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = "Critter Clicker", fontSize = 24.sp)
-        Text(text = "Clicks: ${settingsState.totalCookies}", fontSize = 18.sp)
-        AnimatedImageButton(R.drawable.cauldron, 100, onClick = { viewModel.updateCookies( settingsState.totalCookies + 1 )})
-    }
+        Text(text = "Clicks: ${0}", fontSize = 18.sp)
+    }*/
+
 }
 
-//Composable for the Bottom
+//Composable for the Bottom Bar
 @Composable
-fun BottomBar(navController : NavHostController){
+fun BottomBar(navController: NavHostController) {
     var selected by rememberSaveable { mutableIntStateOf(3) }
     NavigationBar {
         //Navigate to the Pets Screen
         NavigationBarItem(
-            icon = { Icon(Icons.Default.Pets , contentDescription = AppScreens.Pets.name) },
+            icon = { Icon(Icons.Default.Pets, contentDescription = AppScreens.Pets.name) },
             label = { Text(AppScreens.Pets.name) },
             selected = selected == 1,
             onClick = {
