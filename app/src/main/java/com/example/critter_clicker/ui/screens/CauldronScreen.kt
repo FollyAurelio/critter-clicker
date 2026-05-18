@@ -17,14 +17,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.PointerInputScope
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.critter_clicker.R
-import com.example.critter_clicker.data.inventory.InventoryViewModel
-import com.example.critter_clicker.data.settings.SettingsViewModel
+import com.example.critter_clicker.data.game.GameViewModel
 import com.example.critter_clicker.ui.components.AnimatedImageButton
 import kotlinx.coroutines.delay
 
@@ -45,16 +45,17 @@ fun DisapperingText(text: String, duration: Long, position: Offset) {
         visible = visible, exit = fadeOut()
     ) {
         Text(
-            text = text, fontSize = 24.sp
+            text = text, fontSize = 24.sp,
+            color = Color.White
         )
     }
 }
 
 
 @Composable
-fun CauldronScreen(viewModel: InventoryViewModel = viewModel()) {
+fun CauldronScreen(viewModel: GameViewModel = viewModel()) {
 
-    val inventoryState by viewModel.inventoryState.collectAsStateWithLifecycle()
+    val gameState by viewModel.gameState.collectAsStateWithLifecycle()
 
     var tapPosition by remember { mutableStateOf(Offset.Zero) }
 
@@ -80,9 +81,9 @@ fun CauldronScreen(viewModel: InventoryViewModel = viewModel()) {
             AnimatedImageButton(
                 imageId = R.drawable.cauldron, imageSize = 200, onClick = {
                     floatingTexts = floatingTexts + FloatingText(
-                        id = floatingTexts.size, text = "+${inventoryState.cookiesPerClick}", position = tapPosition
+                        id = floatingTexts.size, text = "+${gameState.cookiesPerClick}", position = tapPosition
                     )
-                    viewModel.updateCookies(inventoryState.totalCookies + 1)
+                    viewModel.updateCookies(gameState.totalCookies + 1)
                 })
 
             Text("Click the cauldron to bake cookies!")

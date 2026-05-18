@@ -43,10 +43,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.critter_clicker.data.inventory.InventoryViewModel
+import com.example.critter_clicker.data.game.GameViewModel
 import com.example.critter_clicker.ui.theme.Critter_clickerTheme
 
-import com.example.critter_clicker.data.settings.SettingsViewModel
 import com.example.critter_clicker.ui.components.AnimatedImageButton
 import com.example.critter_clicker.ui.screens.AppScreens
 import com.example.critter_clicker.ui.screens.CauldronScreen
@@ -147,8 +146,8 @@ fun getCookieRepresentation(
 //Composable for the Top Bar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(viewModel: InventoryViewModel = viewModel()) {
-    val inventoryState by viewModel.inventoryState.collectAsStateWithLifecycle()
+fun TopBar(viewModel: GameViewModel = viewModel()) {
+    val gameState by viewModel.gameState.collectAsStateWithLifecycle()
 
     CenterAlignedTopAppBar(
         title = {
@@ -159,7 +158,7 @@ fun TopBar(viewModel: InventoryViewModel = viewModel()) {
                 )
                 Row() {
                     AnimatedImageButton(R.drawable.cookie, 32, {})
-                    val cookieRepresentation = getCookieRepresentation(inventoryState.totalCookies)
+                    val cookieRepresentation = getCookieRepresentation(gameState.totalCookies)
                     Text(
                         "Cookies : ${cookieRepresentation.second}${cookieRepresentation.first}",
                         fontSize = 24.sp
