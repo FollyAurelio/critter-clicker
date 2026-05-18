@@ -1,10 +1,8 @@
 package com.example.critter_clicker.ui.screens
 
-import android.R.attr.visible
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,16 +23,14 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.critter_clicker.R
-import com.example.critter_clicker.data.SettingsViewModel
+import com.example.critter_clicker.data.inventory.InventoryViewModel
+import com.example.critter_clicker.data.settings.SettingsViewModel
 import com.example.critter_clicker.ui.components.AnimatedImageButton
 import kotlinx.coroutines.delay
-import org.intellij.lang.annotations.JdkConstants
 
 
 data class FloatingText(
-    val id: Int,
-    val text: String,
-    val position: Offset
+    val id: Int, val text: String, val position: Offset
 )
 
 @Composable
@@ -46,27 +42,26 @@ fun DisapperingText(text: String, duration: Long, position: Offset) {
         visible = false
     }
     AnimatedVisibility(
-        visible = visible,
-        exit = fadeOut()
+        visible = visible, exit = fadeOut()
     ) {
         Text(
-            text = text,
-            fontSize = 24.sp
+            text = text, fontSize = 24.sp
         )
     }
 }
 
-@Composable
-fun CauldronScreen(viewModel: SettingsViewModel = viewModel()) {
 
-    val settingsState by viewModel.settingsState.collectAsStateWithLifecycle()
+@Composable
+fun CauldronScreen(viewModel: InventoryViewModel = viewModel()) {
+
+    val inventoryState by viewModel.inventoryState.collectAsStateWithLifecycle()
 
     var tapPosition by remember { mutableStateOf(Offset.Zero) }
 
     var floatingTexts by remember {
         mutableStateOf(listOf<FloatingText>())
     }
-
+    //This box center aligns the cauldron and the text
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -76,32 +71,26 @@ fun CauldronScreen(viewModel: SettingsViewModel = viewModel()) {
 
 
 
-                    viewModel.updateCookies(settingsState.totalCookies + 1)
+
                 }
-            },
-        contentAlignment = Alignment.Center
+            }, contentAlignment = Alignment.Center
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            // On click, increment cookies and display text
             AnimatedImageButton(
-                imageId = R.drawable.cauldron,
-                imageSize = 200,
-                onClick = {
+                imageId = R.drawable.cauldron, imageSize = 200, onClick = {
                     floatingTexts = floatingTexts + FloatingText(
-                        id = floatingTexts.size,
-                        text = "+1",
-                        position = tapPosition
+                        id = floatingTexts.size, text = "+${inventoryState.cookiesPerClick}", position = tapPosition
                     )
-                }
-            )
+                    viewModel.updateCookies(inventoryState.totalCookies + 1)
+                })
 
             Text("Click the cauldron to bake cookies!")
         }
 
         floatingTexts.forEach { item ->
             DisapperingText(
-                text = item.text,
-                1000,
-                position = item.position
+                text = item.text, 1000, position = item.position
             )
         }
     }

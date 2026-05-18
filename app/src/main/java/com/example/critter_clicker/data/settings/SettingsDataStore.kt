@@ -1,7 +1,6 @@
-package com.example.critter_clicker.data
+package com.example.critter_clicker.data.settings
 
 import android.content.Context
-import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 

@@ -31,17 +31,11 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -49,9 +43,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.critter_clicker.data.inventory.InventoryViewModel
 import com.example.critter_clicker.ui.theme.Critter_clickerTheme
 
-import com.example.critter_clicker.data.SettingsViewModel
+import com.example.critter_clicker.data.settings.SettingsViewModel
 import com.example.critter_clicker.ui.components.AnimatedImageButton
 import com.example.critter_clicker.ui.screens.AppScreens
 import com.example.critter_clicker.ui.screens.CauldronScreen
@@ -107,13 +102,54 @@ class MainActivity : ComponentActivity() {
 }
 
 
+fun getCookieRepresentation(
+    cookies: Long
+): Pair<String, String> {
+    if (cookies >= 1_000_000_000_000_000_000) {
+        return Pair(
+            "Quin",
+            "%.3f".format(cookies / 1_000_000_000_000_000_000f)
+        )
+    }else if (cookies >= 1_000_000_000_000_000) {
+        return Pair(
+            "Q",
+            "%.3f".format(cookies / 1_000_000_000_000_000f)
+        )
+    }else if (cookies >= 1_000_000_000_000) {
+        return Pair(
+            "T",
+            "%.3f".format(cookies / 1_000_000_000_000f)
+        )
+    }else if (cookies >= 1_000_000_000) {
+        return Pair(
+            "B",
+            "%.3f".format(cookies / 1_000_000_000f)
+        )
+    } else if (cookies >= 1_000_000) {
+        return Pair(
+            "M",
+            "%.3f".format(cookies / 1_000_000f)
+        )
+    } else if (cookies >= 1_000) {
+        return Pair(
+            "K",
+            "%.3f".format(cookies / 1_000f)
+        )
+    }
 
+    return Pair(
+        "",
+        cookies.toString()
+    )
+}
 
 
 //Composable for the Top Bar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar() {
+fun TopBar(viewModel: InventoryViewModel = viewModel()) {
+    val inventoryState by viewModel.inventoryState.collectAsStateWithLifecycle()
+
     CenterAlignedTopAppBar(
         title = {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -123,8 +159,9 @@ fun TopBar() {
                 )
                 Row() {
                     AnimatedImageButton(R.drawable.cookie, 32, {})
+                    val cookieRepresentation = getCookieRepresentation(inventoryState.totalCookies)
                     Text(
-                        "Cookies : 234234234",
+                        "Cookies : ${cookieRepresentation.second}${cookieRepresentation.first}",
                         fontSize = 24.sp
                     )
                     AnimatedImageButton(R.drawable.cookie, 32, {})

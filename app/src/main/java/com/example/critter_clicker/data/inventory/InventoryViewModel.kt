@@ -1,27 +1,31 @@
-package com.example.critter_clicker.data
+package com.example.critter_clicker.data.inventory
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.critter_clicker.data.model.SettingsState
+import com.example.critter_clicker.data.inventory.model.InventoryState
+import com.example.critter_clicker.data.settings.model.SettingsState
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class SettingsViewModel(
+class InventoryViewModel(
     application: Application
 ) : AndroidViewModel(application) {
 
     private val repository =
-        SettingsRepository(application)
+        InventoryRepository(application)
 
-    val settingsState: StateFlow<SettingsState> =
-        repository.settingsFlow.stateIn(
+    val inventoryState: StateFlow<InventoryState> =
+        repository.inventoryFlow.stateIn(
             scope = viewModelScope,
             started =
-                SharingStarted.WhileSubscribed(5000),
-            initialValue = SettingsState(0)
+                SharingStarted.Companion.WhileSubscribed(5000),
+            initialValue = InventoryState(
+                0,
+                1
+            )
         )
 
     fun updateCookies(newCookies: Long) {
