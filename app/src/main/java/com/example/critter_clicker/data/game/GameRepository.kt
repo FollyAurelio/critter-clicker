@@ -15,7 +15,7 @@ class GameRepository(private val context: Context) {
             cookiesPerClick =
                 prefs[Keys.COOKIES_PER_CLICK] ?: 1L,
             cookiesPerSecond =
-                prefs[Keys.COOKIES_PER_SECOND] ?: 0L,
+                prefs[Keys.COOKIES_PER_SECOND] ?: 1L,
             spoonLevel =
                 prefs[Keys.SPOON_LEVEL] ?: 1,
             cauldronLevel =
@@ -69,6 +69,7 @@ class GameRepository(private val context: Context) {
             musicOn = prefs[Keys.MUSIC_ON] ?: true,
 
             gameSpeed = prefs[Keys.GAME_SPEED] ?: 1,
+            lastPlayedTime = prefs[Keys.LAST_PLAYED_TIME] ?: 0L
         )
     }
 
@@ -292,6 +293,12 @@ class GameRepository(private val context: Context) {
     suspend fun resetGame() {
         context.dataStore.edit {
             it.clear()
+        }
+    }
+
+    suspend fun updateLastPlayedTime(value: Long) {
+        context.dataStore.edit {
+            it[Keys.LAST_PLAYED_TIME] = value
         }
     }
 }

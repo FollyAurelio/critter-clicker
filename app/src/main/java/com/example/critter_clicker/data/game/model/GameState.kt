@@ -54,6 +54,7 @@ data class GameState (
     val musicOn : Boolean,
     val gameSpeed : Int,
 
+    val lastPlayedTime: Long
 )
 
 

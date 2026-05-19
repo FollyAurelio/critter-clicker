@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
@@ -29,6 +30,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -56,13 +58,41 @@ import com.example.critter_clicker.ui.screens.PetScreen
 import com.example.critter_clicker.ui.screens.SettingsScreen
 import com.example.critter_clicker.ui.screens.ShopScreen
 import com.example.critter_clicker.ui.screens.StatsScreen
+import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
+    private val viewModel: GameViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            //Get cookies every second
+
+            val gameState by
+            viewModel.gameState.collectAsStateWithLifecycle()
+            //Calculate cookies that should have been made from the last time
+
+            LaunchedEffect(
+                gameState.cookiesPerSecond
+            ) {
+
+                while (true) {
+                    delay(1000)
+                    viewModel.updateCookies(
+                        gameState.totalCookies + gameState.cookiesPerSecond
+                    )
+                    viewModel.updateTotalCookiesAllTime(
+                        gameState.totalCookiesAllTime + gameState.cookiesPerSecond
+                    )
+                    viewModel.updateTotalCookiesGenerated(
+                        gameState.totalCookiesGenerated + gameState.cookiesPerSecond
+                    )
+                }
+            }
+
+
             val navController: NavHostController = rememberNavController()
+
             Critter_clickerTheme {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
@@ -98,7 +128,7 @@ class MainActivity : ComponentActivity() {
                         composable(route = AppScreens.Settings.name) {
                             SettingsScreen()
                         }
-                        composable(route = AppScreens.PetList.name){
+                        composable(route = AppScreens.PetList.name) {
                             PetListScreen(navController)
                         }
 
@@ -108,16 +138,40 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    override fun onStart(){
+        super.onStart()
+        val gameState by
+        viewModel.gameState.collectAsStateWithLifecycle()
+        val currentTime = System.currentTimeMillis()
+
+        val elapsedMilliseconds = currentTime - gameState.lastPlayedTime
+
+        val elapsedSeconds = elapsedMilliseconds / 1000
+        viewModel.updateCookies(
+            gameState.totalCookies + gameState.cookiesPerSecond * elapsedSeconds
+        )
+        viewModel.updateTotalCookiesGenerated(
+            gameState.totalCookiesGenerated + gameState.cookiesPerSecond * elapsedSeconds
+        )
+        viewModel.updateLastPlayedTime(
+            currentTime
+        )
+    }
+
+    override fun onStop(){
+        super.onStop()
+        viewModel.updateLastPlayedTime(
+            System.currentTimeMillis()
+        )
+    }
 }
-
-
-
 
 
 //Composable for the Top Bar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(viewModel: GameViewModel = viewModel(),) {
+fun TopBar(viewModel: GameViewModel = viewModel()) {
     val gameState by viewModel.gameState.collectAsStateWithLifecycle()
 
     CenterAlignedTopAppBar(
@@ -142,11 +196,7 @@ fun TopBar(viewModel: GameViewModel = viewModel(),) {
             containerColor = Color(0xFF1A1A2E), // background
             titleContentColor = Color.White      // title color
         ),
-
-
-        )
-
-
+    )
 }
 
 //Composable for the Bottom Bar

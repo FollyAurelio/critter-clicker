@@ -157,64 +157,73 @@ fun PetListScreen(navController: NavHostController, viewModel: GameViewModel = v
             petExp = 0,
             navController
         )
-        PetListButton(
-            petId = PetType.BLOB,
-            petName = petNames[PetType.BLOB.ordinal],
-            petHunger = gameState.blobHunger,
-            petImageId = petImages[PetType.BLOB.ordinal],
-            petHappy = gameState.blobHappy,
-            petExp = gameState.blobExp,
-            navController
-        )
-        PetListButton(
-            petId = PetType.FIREGUY,
-            petName = petNames[PetType.FIREGUY.ordinal],
-            petHunger = gameState.fireguyHunger,
-            petImageId = petImages[PetType.FIREGUY.ordinal],
-            petHappy = gameState.fireguyHappy,
-            petExp = gameState.fireguyExp,
-            navController
-        )
 
-        PetListButton(
-            petId = PetType.SNAKE,
-            petName = petNames[PetType.SNAKE.ordinal],
-            petHunger = gameState.snakeHunger,
-            petImageId = petImages[PetType.SNAKE.ordinal],
-            petHappy = gameState.snakeHappy,
-            petExp = gameState.snakeExp,
-            navController
-        )
-
-        PetListButton(
-            petId = PetType.BIRD,
-            petName = petNames[PetType.BIRD.ordinal],
-            petHunger = gameState.birdHunger,
-            petImageId = petImages[PetType.BIRD.ordinal],
-            petHappy = gameState.birdHappy,
-            petExp = gameState.birdExp,
-            navController
-        )
-
-        PetListButton(
-            petId = PetType.MONKEY,
-            petName = petNames[PetType.MONKEY.ordinal],
-            petHunger = gameState.monkeyHunger,
-            petImageId = petImages[PetType.MONKEY.ordinal],
-            petHappy = gameState.monkeyHappy,
-            petExp = gameState.monkeyExp,
-            navController
-        )
-
-        PetListButton(
-            petId = PetType.BOT,
-            petName = petNames[PetType.BOT.ordinal],
-            petHunger = gameState.botHunger,
-            petImageId = petImages[PetType.BOT.ordinal],
-            petHappy = gameState.botHappy,
-            petExp = gameState.botExp,
-            navController
-        )
+        if (gameState.blobExp != 0L) {
+            PetListButton(
+                petId = PetType.BLOB,
+                petName = petNames[PetType.BLOB.ordinal],
+                petHunger = gameState.blobHunger,
+                petImageId = petImages[PetType.BLOB.ordinal],
+                petHappy = gameState.blobHappy,
+                petExp = gameState.blobExp,
+                navController
+            )
+        }
+        if (gameState.fireguyExp != 0L) {
+            PetListButton(
+                petId = PetType.FIREGUY,
+                petName = petNames[PetType.FIREGUY.ordinal],
+                petHunger = gameState.fireguyHunger,
+                petImageId = petImages[PetType.FIREGUY.ordinal],
+                petHappy = gameState.fireguyHappy,
+                petExp = gameState.fireguyExp,
+                navController
+            )
+        }
+        if (gameState.snakeExp != 0L) {
+            PetListButton(
+                petId = PetType.SNAKE,
+                petName = petNames[PetType.SNAKE.ordinal],
+                petHunger = gameState.snakeHunger,
+                petImageId = petImages[PetType.SNAKE.ordinal],
+                petHappy = gameState.snakeHappy,
+                petExp = gameState.snakeExp,
+                navController
+            )
+        }
+        if (gameState.birdExp != 0L) {
+            PetListButton(
+                petId = PetType.BIRD,
+                petName = petNames[PetType.BIRD.ordinal],
+                petHunger = gameState.birdHunger,
+                petImageId = petImages[PetType.BIRD.ordinal],
+                petHappy = gameState.birdHappy,
+                petExp = gameState.birdExp,
+                navController
+            )
+        }
+        if (gameState.monkeyExp != 0L) {
+            PetListButton(
+                petId = PetType.MONKEY,
+                petName = petNames[PetType.MONKEY.ordinal],
+                petHunger = gameState.monkeyHunger,
+                petImageId = petImages[PetType.MONKEY.ordinal],
+                petHappy = gameState.monkeyHappy,
+                petExp = gameState.monkeyExp,
+                navController
+            )
+        }
+        if (gameState.botExp != 0L) {
+            PetListButton(
+                petId = PetType.BOT,
+                petName = petNames[PetType.BOT.ordinal],
+                petHunger = gameState.botHunger,
+                petImageId = petImages[PetType.BOT.ordinal],
+                petHappy = gameState.botHappy,
+                petExp = gameState.botExp,
+                navController
+            )
+        }
     }
 }
 

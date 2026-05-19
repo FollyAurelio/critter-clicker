@@ -118,6 +118,9 @@ object Keys {
 
     val GAME_SPEED =
         intPreferencesKey("gameSpeed")
+
+    val LAST_PLAYED_TIME =
+        longPreferencesKey("lastPlayedTime")
 }
 
 

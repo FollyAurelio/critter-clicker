@@ -26,7 +26,7 @@ class GameViewModel(
 
                 totalCookies = 0L,
                 cookiesPerClick = 1L,
-                cookiesPerSecond = 0L,
+                cookiesPerSecond = 1L,
                 spoonLevel = 1,
                 cauldronLevel = 1,
 
@@ -68,6 +68,7 @@ class GameViewModel(
                 soundEffectOn = true,
                 musicOn = true,
                 gameSpeed = 1,
+                lastPlayedTime = 0L,
 
             )
         )
@@ -293,6 +294,13 @@ class GameViewModel(
             repository.resetGame()
         }
     }
+
+    fun updateLastPlayedTime(value: Long) {
+        viewModelScope.launch {
+            repository.updateLastPlayedTime(value)
+        }
+    }
+
 
 }
 
