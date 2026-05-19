@@ -11,41 +11,30 @@ data class GameState (
     val totalCookiesClicked : Long,
     val totalCookiesGenerated : Long,
 
-    val totalBalls : Int,
-    val totalRings : Int,
-    val totalFeather : Int,
-    val totalCharcoal : Int,
-
     val currentPet : Int,
 
     // Blob
     val blobExp: Long,
-    val blobHappy: Boolean,
     val blobHunger: Int,
 
     // Fireguy
     val fireguyExp: Long,
-    val fireguyHappy: Boolean,
     val fireguyHunger: Int,
 
     // Snake
     val snakeExp: Long,
-    val snakeHappy: Boolean,
     val snakeHunger: Int,
 
     // Bird
     val birdExp: Long,
-    val birdHappy: Boolean,
     val birdHunger: Int,
 
     // Monkey
     val monkeyExp: Long,
-    val monkeyHappy: Boolean,
     val monkeyHunger: Int,
 
     // Bot
     val botExp: Long,
-    val botHappy: Boolean,
     val botHunger: Int,
 
     val volume : Int, //0 - 100

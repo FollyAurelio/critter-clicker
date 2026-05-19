@@ -221,7 +221,7 @@ fun ShopScreen(viewModel: GameViewModel = viewModel()) {
 
         // Button to buy the monkey
         ShopButton(
-            "Monkey",
+            "Happy Monkey",
             "Loves balls (???).",
             R.drawable.monkey,
             2,
@@ -232,7 +232,7 @@ fun ShopScreen(viewModel: GameViewModel = viewModel()) {
         // Button to buy the bot
         ShopButton(
             "Bot",
-            "Clankers don't have to eat.",
+            "The Bot",
             R.drawable.bot,
             5,
             gameState.botExp == 0L,
@@ -242,33 +242,33 @@ fun ShopScreen(viewModel: GameViewModel = viewModel()) {
             "Ball",
             "A Ball. Maybe a monkey would like to play with it.",
             R.drawable.ball,
-            0,
-            true,
-            { viewModel.updateBalls(gameState.totalBalls + 1) }
+            gameState.monkeyExp * 5,
+            gameState.monkeyExp > 0,
+            { viewModel.updateMonkeyExp(gameState.monkeyExp + 1) }
         )
         ShopButton(
             "Feather",
             "A Feather. Maybe a monkey would like to play with it (though I may be wrong).",
             R.drawable.feather,
-            0,
-            true,
-            { viewModel.updateFeather(gameState.totalFeather + 1) }
+            gameState.snakeExp * 3,
+            gameState.snakeExp > 0,
+            { viewModel.updateSnakeExp(gameState.snakeExp + 1) }
         )
         ShopButton(
             "Ring",
             "A Ring. You might not believe this... but maybe a monkey would like to play with it.",
             R.drawable.ring,
-            0,
-            true,
-            { viewModel.updateRings(gameState.totalRings + 1) }
+            gameState.birdExp * 4,
+            gameState.birdExp > 0,
+            { viewModel.updateBirdExp(gameState.birdExp + 1) }
         )
         ShopButton(
             "Charcoal",
             "Some Charcoal. Good for fire, and fireguys.",
             R.drawable.coal,
-            15,
-            true,
-            { viewModel.updateCharcoal(gameState.totalCharcoal + 1) }
+            gameState.fireguyExp * 2,
+            gameState.fireguyExp > 0,
+            { viewModel.updateFireguyExp(gameState.fireguyExp + 1) }
         )
     }
 

@@ -39,22 +39,12 @@ fun StatsScreen(viewModel: GameViewModel = viewModel()) {
             modifier = Modifier.padding(16.dp)
         )
 
-        HorizontalDivider()
         Text(
             "General",
             fontSize = 32.sp
         )
         HorizontalDivider()
         Text(text = "Cookies in Inventory : ${gameState.totalCookies} cookies")
-        Text(text = "Balls in Inventory : ${gameState.totalBalls} balls")
-        Text(text = "Feathers in Inventory : ${gameState.totalFeather} feathers")
-        Text(text = "Rings in Inventory : ${gameState.totalRings} rings")
-        Text(text = "Charcoal in Inventory : ${gameState.totalCharcoal} charcoal")
-        Text(
-            "Milestones",
-            fontSize = 32.sp
-        )
-        HorizontalDivider()
         Text(text = "Cookies transmutted (all time) : ${gameState.totalCookiesAllTime}")
         Text(text = "Cookies per press : ${viewModel.getCookiesPerClick()}")
         Text(text = "Cookies per second : ${viewModel.getCookiesPerSecond()}")

@@ -36,35 +36,24 @@ class GameViewModel(
             totalCookiesAllTime = 0L,
             totalCookiesClicked = 0L,
             totalCookiesGenerated = 0L,
-
-            totalBalls = 0,
-            totalRings = 0,
-            totalFeather = 0,
-            totalCharcoal = 0,
             currentPet = 0,
 
             blobExp = 0L,
-            blobHappy = true,
             blobHunger = 5000,
 
             fireguyExp = 0L,
-            fireguyHappy = true,
             fireguyHunger = 5000,
 
             snakeExp = 0L,
-            snakeHappy = true,
             snakeHunger = 5000,
 
             birdExp = 0L,
-            birdHappy = true,
             birdHunger = 5000,
 
             monkeyExp = 0L,
-            monkeyHappy = true,
             monkeyHunger = 5000,
 
             botExp = 0L,
-            botHappy = true,
             botHunger = 5000,
 
             volume = 100,
@@ -142,29 +131,6 @@ class GameViewModel(
         }
     }
 
-    fun updateBalls(value: Int) {
-        viewModelScope.launch {
-            repository.updateBalls(value)
-        }
-    }
-
-    fun updateRings(value: Int) {
-        viewModelScope.launch {
-            repository.updateRings(value)
-        }
-    }
-
-    fun updateFeather(value: Int) {
-        viewModelScope.launch {
-            repository.updateFeather(value)
-        }
-    }
-
-    fun updateCharcoal(value: Int) {
-        viewModelScope.launch {
-            repository.updateCharcoal(value)
-        }
-    }
 
     fun updateCurrentPet(value: Int) {
         viewModelScope.launch {
@@ -196,11 +162,6 @@ class GameViewModel(
         }
     }
 
-    fun updateBlobHappy(value: Boolean) {
-        viewModelScope.launch {
-            repository.updateBlobHappy(value)
-        }
-    }
 
     fun updateBlobHunger(value: Int) {
         viewModelScope.launch {
@@ -215,11 +176,6 @@ class GameViewModel(
         }
     }
 
-    fun updateFireguyHappy(value: Boolean) {
-        viewModelScope.launch {
-            repository.updateFireguyHappy(value)
-        }
-    }
 
     fun updateFireguyHunger(value: Int) {
         viewModelScope.launch {
@@ -231,12 +187,6 @@ class GameViewModel(
     fun updateSnakeExp(value: Long) {
         viewModelScope.launch {
             repository.updateSnakeExp(value)
-        }
-    }
-
-    fun updateSnakeHappy(value: Boolean) {
-        viewModelScope.launch {
-            repository.updateSnakeHappy(value)
         }
     }
 
@@ -253,11 +203,6 @@ class GameViewModel(
         }
     }
 
-    fun updateBirdHappy(value: Boolean) {
-        viewModelScope.launch {
-            repository.updateBirdHappy(value)
-        }
-    }
 
     fun updateBirdHunger(value: Int) {
         viewModelScope.launch {
@@ -269,12 +214,6 @@ class GameViewModel(
     fun updateMonkeyExp(value: Long) {
         viewModelScope.launch {
             repository.updateMonkeyExp(value)
-        }
-    }
-
-    fun updateMonkeyHappy(value: Boolean) {
-        viewModelScope.launch {
-            repository.updateMonkeyHappy(value)
         }
     }
 
@@ -291,11 +230,6 @@ class GameViewModel(
         }
     }
 
-    fun updateBotHappy(value: Boolean) {
-        viewModelScope.launch {
-            repository.updateBotHappy(value)
-        }
-    }
 
     fun updateBotHunger(value: Int) {
         viewModelScope.launch {

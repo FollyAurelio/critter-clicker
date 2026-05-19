@@ -29,25 +29,11 @@ object Keys {
     val TOTAL_COOKIES_GENERATED =
         longPreferencesKey("totalCookiesGenerated")
 
-    val TOTAL_BALLS =
-        intPreferencesKey("totalBalls")
-
-    val TOTAL_RINGS =
-        intPreferencesKey("totalRings")
-
-    val TOTAL_FEATHER =
-        intPreferencesKey("totalFeather")
-
-    val TOTAL_CHARCOAL =
-        intPreferencesKey("totalCharcoal")
-
     val CURRENT_PET =
         intPreferencesKey("currentPet")
     val BLOB_EXP =
         longPreferencesKey("blobExp")
 
-    val BLOB_HAPPY =
-        booleanPreferencesKey("blobHappy")
 
     val BLOB_HUNGER =
         intPreferencesKey("blobHunger")
@@ -56,8 +42,6 @@ object Keys {
     val FIREGUY_EXP =
         longPreferencesKey("fireguyExp")
 
-    val FIREGUY_HAPPY =
-        booleanPreferencesKey("fireguyHappy")
 
     val FIREGUY_HUNGER =
         intPreferencesKey("fireguyHunger")
@@ -66,8 +50,6 @@ object Keys {
     val SNAKE_EXP =
         longPreferencesKey("snakeExp")
 
-    val SNAKE_HAPPY =
-        booleanPreferencesKey("snakeHappy")
 
     val SNAKE_HUNGER =
         intPreferencesKey("snakeHunger")
@@ -76,8 +58,6 @@ object Keys {
     val BIRD_EXP =
         longPreferencesKey("birdExp")
 
-    val BIRD_HAPPY =
-        booleanPreferencesKey("birdHappy")
 
     val BIRD_HUNGER =
         intPreferencesKey("birdHunger")
@@ -86,8 +66,6 @@ object Keys {
     val MONKEY_EXP =
         longPreferencesKey("monkeyExp")
 
-    val MONKEY_HAPPY =
-        booleanPreferencesKey("monkeyHappy")
 
     val MONKEY_HUNGER =
         intPreferencesKey("monkeyHunger")
@@ -95,8 +73,6 @@ object Keys {
     val BOT_EXP =
         longPreferencesKey("botExp")
 
-    val BOT_HAPPY =
-        booleanPreferencesKey("botHappy")
 
     val BOT_HUNGER =
         intPreferencesKey("botHunger")

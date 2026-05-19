@@ -39,7 +39,6 @@ fun PetListButton(
     petName: String,
     petHunger: Int,
     petImageId: Int,
-    petHappy: Boolean,
     petExp: Long,
     navController: NavHostController,
     viewModel: GameViewModel = viewModel()
@@ -93,17 +92,6 @@ fun PetListButton(
                     "Exp : $petExp",
                     color = Color.Blue
                 )
-                val mood: String
-                val textColor: Color
-                if (petHappy) {
-                    mood = "Happy"
-                    textColor = Color.Green
-                } else {
-                    mood = "Sad"
-                    textColor = Color.Red
-                }
-
-                Text(text = "Mood : $mood", color = textColor)
 
             }
 
@@ -153,7 +141,6 @@ fun PetListScreen(navController: NavHostController, viewModel: GameViewModel = v
             petName = petNames[PetType.NONE.ordinal],
             petHunger = 0,
             petImageId = 0,
-            petHappy = false,
             petExp = 0,
             navController
         )
@@ -164,7 +151,6 @@ fun PetListScreen(navController: NavHostController, viewModel: GameViewModel = v
                 petName = petNames[PetType.BLOB.ordinal],
                 petHunger = gameState.blobHunger,
                 petImageId = petImages[PetType.BLOB.ordinal],
-                petHappy = gameState.blobHappy,
                 petExp = gameState.blobExp,
                 navController
             )
@@ -175,7 +161,6 @@ fun PetListScreen(navController: NavHostController, viewModel: GameViewModel = v
                 petName = petNames[PetType.FIREGUY.ordinal],
                 petHunger = gameState.fireguyHunger,
                 petImageId = petImages[PetType.FIREGUY.ordinal],
-                petHappy = gameState.fireguyHappy,
                 petExp = gameState.fireguyExp,
                 navController
             )
@@ -186,7 +171,6 @@ fun PetListScreen(navController: NavHostController, viewModel: GameViewModel = v
                 petName = petNames[PetType.SNAKE.ordinal],
                 petHunger = gameState.snakeHunger,
                 petImageId = petImages[PetType.SNAKE.ordinal],
-                petHappy = gameState.snakeHappy,
                 petExp = gameState.snakeExp,
                 navController
             )
@@ -197,7 +181,6 @@ fun PetListScreen(navController: NavHostController, viewModel: GameViewModel = v
                 petName = petNames[PetType.BIRD.ordinal],
                 petHunger = gameState.birdHunger,
                 petImageId = petImages[PetType.BIRD.ordinal],
-                petHappy = gameState.birdHappy,
                 petExp = gameState.birdExp,
                 navController
             )
@@ -208,7 +191,6 @@ fun PetListScreen(navController: NavHostController, viewModel: GameViewModel = v
                 petName = petNames[PetType.MONKEY.ordinal],
                 petHunger = gameState.monkeyHunger,
                 petImageId = petImages[PetType.MONKEY.ordinal],
-                petHappy = gameState.monkeyHappy,
                 petExp = gameState.monkeyExp,
                 navController
             )
@@ -219,7 +201,6 @@ fun PetListScreen(navController: NavHostController, viewModel: GameViewModel = v
                 petName = petNames[PetType.BOT.ordinal],
                 petHunger = gameState.botHunger,
                 petImageId = petImages[PetType.BOT.ordinal],
-                petHappy = gameState.botHappy,
                 petExp = gameState.botExp,
                 navController
             )

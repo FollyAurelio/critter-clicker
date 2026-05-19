@@ -24,40 +24,25 @@ class GameRepository(private val context: Context) {
 
             totalCookiesGenerated =
                 prefs[Keys.TOTAL_COOKIES_GENERATED] ?: 0L,
-            totalBalls =
-                prefs[Keys.TOTAL_BALLS] ?: 0,
-            totalRings =
-                prefs[Keys.TOTAL_RINGS] ?: 0,
-            totalFeather =
-                prefs[Keys.TOTAL_FEATHER] ?: 0,
-            totalCharcoal =
-                prefs[Keys.TOTAL_CHARCOAL] ?: 0,
-
             currentPet =
                 prefs[Keys.CURRENT_PET] ?: 0,
 
             blobExp = prefs[Keys.BLOB_EXP] ?: 0L,
-            blobHappy = prefs[Keys.BLOB_HAPPY] ?: true,
             blobHunger = prefs[Keys.BLOB_HUNGER] ?: 5000,
 
             fireguyExp = prefs[Keys.FIREGUY_EXP] ?: 0L,
-            fireguyHappy = prefs[Keys.FIREGUY_HAPPY] ?: true,
             fireguyHunger = prefs[Keys.FIREGUY_HUNGER] ?: 5000,
 
             snakeExp = prefs[Keys.SNAKE_EXP] ?: 0L,
-            snakeHappy = prefs[Keys.SNAKE_HAPPY] ?: true,
             snakeHunger = prefs[Keys.SNAKE_HUNGER] ?: 5000,
 
             birdExp = prefs[Keys.BIRD_EXP] ?: 0L,
-            birdHappy = prefs[Keys.BIRD_HAPPY] ?: true,
             birdHunger = prefs[Keys.BIRD_HUNGER] ?: 5000,
 
             monkeyExp = prefs[Keys.MONKEY_EXP] ?: 0L,
-            monkeyHappy = prefs[Keys.MONKEY_HAPPY] ?: true,
             monkeyHunger = prefs[Keys.MONKEY_HUNGER] ?: 5000,
 
             botExp = prefs[Keys.BOT_EXP] ?: 0L,
-            botHappy = prefs[Keys.BOT_HAPPY] ?: true,
             botHunger = prefs[Keys.BOT_HUNGER] ?: 5000,
 
             volume = prefs[Keys.VOLUME] ?: 100,
@@ -108,30 +93,6 @@ class GameRepository(private val context: Context) {
         }
     }
 
-    suspend fun updateBalls(value: Int) {
-        context.dataStore.edit {
-            it[Keys.TOTAL_BALLS] = value
-        }
-    }
-
-    suspend fun updateRings(value: Int) {
-        context.dataStore.edit {
-            it[Keys.TOTAL_RINGS] = value
-        }
-    }
-
-    suspend fun updateFeather(value: Int) {
-        context.dataStore.edit {
-            it[Keys.TOTAL_FEATHER] = value
-        }
-    }
-
-    suspend fun updateCharcoal(value: Int) {
-        context.dataStore.edit {
-            it[Keys.TOTAL_CHARCOAL] = value
-        }
-    }
-
     suspend fun updateCurrentPet(value: Int) {
         context.dataStore.edit {
             it[Keys.CURRENT_PET] = value
@@ -144,11 +105,6 @@ class GameRepository(private val context: Context) {
         }
     }
 
-    suspend fun updateBlobHappy(value: Boolean) {
-        context.dataStore.edit {
-            it[Keys.BLOB_HAPPY] = value
-        }
-    }
 
     suspend fun updateBlobHunger(value: Int) {
         context.dataStore.edit {
@@ -163,11 +119,7 @@ class GameRepository(private val context: Context) {
         }
     }
 
-    suspend fun updateFireguyHappy(value: Boolean) {
-        context.dataStore.edit {
-            it[Keys.FIREGUY_HAPPY] = value
-        }
-    }
+
 
     suspend fun updateFireguyHunger(value: Int) {
         context.dataStore.edit {
@@ -182,11 +134,7 @@ class GameRepository(private val context: Context) {
         }
     }
 
-    suspend fun updateSnakeHappy(value: Boolean) {
-        context.dataStore.edit {
-            it[Keys.SNAKE_HAPPY] = value
-        }
-    }
+
 
     suspend fun updateSnakeHunger(value: Int) {
         context.dataStore.edit {
@@ -201,11 +149,7 @@ class GameRepository(private val context: Context) {
         }
     }
 
-    suspend fun updateBirdHappy(value: Boolean) {
-        context.dataStore.edit {
-            it[Keys.BIRD_HAPPY] = value
-        }
-    }
+
 
     suspend fun updateBirdHunger(value: Int) {
         context.dataStore.edit {
@@ -220,11 +164,7 @@ class GameRepository(private val context: Context) {
         }
     }
 
-    suspend fun updateMonkeyHappy(value: Boolean) {
-        context.dataStore.edit {
-            it[Keys.MONKEY_HAPPY] = value
-        }
-    }
+
 
     suspend fun updateMonkeyHunger(value: Int) {
         context.dataStore.edit {
@@ -239,11 +179,7 @@ class GameRepository(private val context: Context) {
         }
     }
 
-    suspend fun updateBotHappy(value: Boolean) {
-        context.dataStore.edit {
-            it[Keys.BOT_HAPPY] = value
-        }
-    }
+
 
     suspend fun updateBotHunger(value: Int) {
         context.dataStore.edit {
