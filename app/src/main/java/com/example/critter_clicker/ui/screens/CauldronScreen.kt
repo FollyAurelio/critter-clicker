@@ -93,9 +93,7 @@ fun CauldronScreen(viewModel: GameViewModel = viewModel()) {
                         text = "+${viewModel.getCookiesPerClick()}",
                         position = tapPosition
                     )
-                    viewModel.updateCookies(gameState.totalCookies + viewModel.getCookiesPerClick())
-                    viewModel.updateTotalCookiesClicked(gameState.totalCookiesClicked + viewModel.getCookiesPerClick())
-                    viewModel.updateTotalCookiesAllTime(gameState.totalCookiesAllTime + viewModel.getCookiesPerClick())
+                    viewModel.handleClick()
                 })
 
             Text("Click the cauldron to bake cookies!")

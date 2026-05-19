@@ -272,6 +272,15 @@ class GameViewModel(
             repository.updateLastPlayedTime(value)
         }
     }
+    fun handleClick() {
+        viewModelScope.launch {
+            val currentState = gameState.value
+            updateCookies(currentState.totalCookies + getCookiesPerClick())
+            updateTotalCookiesClicked(currentState.totalCookiesClicked + getCookiesPerClick())
+            updateTotalCookiesAllTime(currentState.totalCookiesAllTime + getCookiesPerClick()) // single atomic operation
+        }
+
+    }
 
     fun offlineCalculations() {
 

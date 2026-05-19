@@ -195,7 +195,7 @@ fun ShopScreen(viewModel: GameViewModel = viewModel()) {
             "FireGuy",
             "The hottest one around, has a chronic charcoal addiction.",
             R.drawable.fireguy,
-            5,
+            5000,
             gameState.fireguyExp == 0L,
             { viewModel.updateFireguyExp(gameState.fireguyExp + 1) }
         )
@@ -204,7 +204,7 @@ fun ShopScreen(viewModel: GameViewModel = viewModel()) {
             "Snake",
             "A true snake in the grass. Loves birds.",
             R.drawable.snake,
-            7,
+            10000,
             gameState.snakeExp == 0L,
             { viewModel.updateSnakeExp(gameState.snakeExp + 1) }
         )
@@ -214,7 +214,7 @@ fun ShopScreen(viewModel: GameViewModel = viewModel()) {
             "Bird",
             "Never shuts up. Loves jewelery and hates snakes with a passion.",
             R.drawable.bird,
-            12,
+            120000,
             gameState.birdExp == 0L,
             { viewModel.updateBirdExp(gameState.birdExp + 1) }
         )
@@ -224,7 +224,7 @@ fun ShopScreen(viewModel: GameViewModel = viewModel()) {
             "Happy Monkey",
             "Loves balls (???).",
             R.drawable.monkey,
-            2,
+            200_000,
             gameState.monkeyExp == 0L,
             { viewModel.updateMonkeyExp(gameState.monkeyExp + 1) }
         )
@@ -234,7 +234,7 @@ fun ShopScreen(viewModel: GameViewModel = viewModel()) {
             "Bot",
             "The Bot",
             R.drawable.bot,
-            5,
+            500_000,
             gameState.botExp == 0L,
             { viewModel.updateBotExp(gameState.botExp + 1) }
         )

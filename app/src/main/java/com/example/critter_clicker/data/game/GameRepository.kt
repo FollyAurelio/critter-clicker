@@ -62,7 +62,6 @@ class GameRepository(private val context: Context) {
     }
 
 
-
     suspend fun updateSpoonLevel(value: Int) {
         context.dataStore.edit {
             it[Keys.SPOON_LEVEL] = value
@@ -120,7 +119,6 @@ class GameRepository(private val context: Context) {
     }
 
 
-
     suspend fun updateFireguyHunger(value: Int) {
         context.dataStore.edit {
             it[Keys.FIREGUY_HUNGER] = value
@@ -133,7 +131,6 @@ class GameRepository(private val context: Context) {
             it[Keys.SNAKE_EXP] = value
         }
     }
-
 
 
     suspend fun updateSnakeHunger(value: Int) {
@@ -150,7 +147,6 @@ class GameRepository(private val context: Context) {
     }
 
 
-
     suspend fun updateBirdHunger(value: Int) {
         context.dataStore.edit {
             it[Keys.BIRD_HUNGER] = value
@@ -165,7 +161,6 @@ class GameRepository(private val context: Context) {
     }
 
 
-
     suspend fun updateMonkeyHunger(value: Int) {
         context.dataStore.edit {
             it[Keys.MONKEY_HUNGER] = value
@@ -178,7 +173,6 @@ class GameRepository(private val context: Context) {
             it[Keys.BOT_EXP] = value
         }
     }
-
 
 
     suspend fun updateBotHunger(value: Int) {
