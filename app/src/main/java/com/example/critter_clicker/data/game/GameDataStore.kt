@@ -47,6 +47,8 @@ object Keys {
     val TOTAL_CHARCOAL =
         intPreferencesKey("totalCharcoal")
 
+    val CURRENT_PET =
+        intPreferencesKey("currentPet")
     val BLOB_EXP =
         longPreferencesKey("blobExp")
 

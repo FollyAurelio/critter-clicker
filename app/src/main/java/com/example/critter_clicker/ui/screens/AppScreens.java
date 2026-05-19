@@ -5,5 +5,6 @@ public enum AppScreens {
     Shop,
     Pets,
     Stats,
-    Settings
+    Settings,
+    PetList
 }

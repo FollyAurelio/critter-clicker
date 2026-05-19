@@ -38,6 +38,7 @@ class GameViewModel(
                 totalRings = 0,
                 totalFeather = 0,
                 totalCharcoal = 0,
+                currentPet = 0,
 
                 blobExp = 0L,
                 blobHappy = true,
@@ -123,6 +124,12 @@ class GameViewModel(
     fun updateCharcoal(value: Int) {
         viewModelScope.launch {
             repository.updateCharcoal(value)
+        }
+    }
+
+    fun updateCurrentPet(value: Int) {
+        viewModelScope.launch {
+            repository.updateCurrentPet(value)
         }
     }
 

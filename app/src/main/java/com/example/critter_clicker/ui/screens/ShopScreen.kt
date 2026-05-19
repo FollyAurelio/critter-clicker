@@ -268,7 +268,7 @@ fun ShopScreen(viewModel: GameViewModel = viewModel()) {
             R.drawable.coal,
             15,
             true,
-            { viewModel.updateRings(gameState.totalCharcoal + 1) }
+            { viewModel.updateCharcoal(gameState.totalCharcoal + 1) }
         )
     }
 

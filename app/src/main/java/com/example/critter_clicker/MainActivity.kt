@@ -51,6 +51,7 @@ import com.example.critter_clicker.ui.components.AnimatedImageButton
 import com.example.critter_clicker.ui.components.getCookieRepresentation
 import com.example.critter_clicker.ui.screens.AppScreens
 import com.example.critter_clicker.ui.screens.CauldronScreen
+import com.example.critter_clicker.ui.screens.PetScreen
 import com.example.critter_clicker.ui.screens.SettingsScreen
 import com.example.critter_clicker.ui.screens.ShopScreen
 import com.example.critter_clicker.ui.screens.StatsScreen
@@ -78,7 +79,7 @@ class MainActivity : ComponentActivity() {
                     ) {
                         //Pets screen
                         composable(route = AppScreens.Pets.name) {
-
+                            PetScreen(navController)
                         }
                         //Shop screen
                         composable(route = AppScreens.Shop.name) {
@@ -95,6 +96,9 @@ class MainActivity : ComponentActivity() {
                         //Settings screen
                         composable(route = AppScreens.Settings.name) {
                             SettingsScreen()
+                        }
+                        composable(route = AppScreens.PetList.name){
+
                         }
 
 

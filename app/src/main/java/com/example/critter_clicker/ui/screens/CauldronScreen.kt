@@ -65,13 +65,14 @@ fun CauldronScreen(viewModel: GameViewModel = viewModel()) {
     var floatingTexts by remember {
         mutableStateOf(listOf<FloatingText>())
     }
-    //This box center aligns the cauldron and the text
+
     Text(
         text = "Cauldron",
         fontSize = 32.sp,
         modifier = Modifier.padding(16.dp)
     )
     HorizontalDivider()
+    //This box center aligns the cauldron and the text
     Box(
         modifier = Modifier
             .fillMaxSize()

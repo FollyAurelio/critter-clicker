@@ -37,6 +37,9 @@ class GameRepository(private val context: Context) {
             totalCharcoal =
                 prefs[Keys.TOTAL_CHARCOAL] ?: 0,
 
+            currentPet =
+                prefs[Keys.CURRENT_PET] ?: 0,
+
             blobExp = prefs[Keys.BLOB_EXP] ?: 0L,
             blobHappy = prefs[Keys.BLOB_HAPPY] ?: true,
             blobHunger = prefs[Keys.BLOB_HUNGER] ?: 5000,
@@ -139,6 +142,12 @@ class GameRepository(private val context: Context) {
     suspend fun updateCharcoal(value: Int) {
         context.dataStore.edit {
             it[Keys.TOTAL_CHARCOAL] = value
+        }
+    }
+
+    suspend fun updateCurrentPet(value: Int) {
+        context.dataStore.edit {
+            it[Keys.CURRENT_PET] = value
         }
     }
 

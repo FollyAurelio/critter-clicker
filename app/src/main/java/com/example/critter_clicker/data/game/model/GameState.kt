@@ -17,6 +17,8 @@ data class GameState (
     val totalFeather : Int,
     val totalCharcoal : Int,
 
+    val currentPet : Int,
+
     // Blob
     val blobExp: Long,
     val blobHappy: Boolean,
