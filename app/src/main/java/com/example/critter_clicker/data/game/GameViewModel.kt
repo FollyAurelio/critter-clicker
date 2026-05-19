@@ -13,71 +13,68 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.lang.Math.pow
+import kotlin.math.pow
 
 class GameViewModel(
     application: Application
 ) : AndroidViewModel(application) {
 
 
-    private val repository =
-        GameRepository(application)
+    private val repository = GameRepository(application)
 
-    val gameState: StateFlow<GameState> =
-        repository.gameFlow.stateIn(
-            scope = viewModelScope,
-            started =
-                SharingStarted.WhileSubscribed(5000),
+    val gameState: StateFlow<GameState> = repository.gameFlow.stateIn(
+        scope = viewModelScope, started = SharingStarted.WhileSubscribed(5000),
 
-            initialValue = GameState(
+        initialValue = GameState(
 
-                totalCookies = 0L,
-                cookiesPerClick = 1L,
-                cookiesPerSecond = 1L,
-                spoonLevel = 1,
-                cauldronLevel = 1,
+            totalCookies = 0L,
 
-                totalCookiesAllTime = 0L,
-                totalCookiesClicked = 0L,
-                totalCookiesGenerated = 0L,
+            spoonLevel = 1,
+            cauldronLevel = 1,
 
-                totalBalls = 0,
-                totalRings = 0,
-                totalFeather = 0,
-                totalCharcoal = 0,
-                currentPet = 0,
+            totalCookiesAllTime = 0L,
+            totalCookiesClicked = 0L,
+            totalCookiesGenerated = 0L,
 
-                blobExp = 0L,
-                blobHappy = true,
-                blobHunger = 5000,
+            totalBalls = 0,
+            totalRings = 0,
+            totalFeather = 0,
+            totalCharcoal = 0,
+            currentPet = 0,
 
-                fireguyExp = 0L,
-                fireguyHappy = true,
-                fireguyHunger = 5000,
+            blobExp = 0L,
+            blobHappy = true,
+            blobHunger = 5000,
 
-                snakeExp = 0L,
-                snakeHappy = true,
-                snakeHunger = 5000,
+            fireguyExp = 0L,
+            fireguyHappy = true,
+            fireguyHunger = 5000,
 
-                birdExp = 0L,
-                birdHappy = true,
-                birdHunger = 5000,
+            snakeExp = 0L,
+            snakeHappy = true,
+            snakeHunger = 5000,
 
-                monkeyExp = 0L,
-                monkeyHappy = true,
-                monkeyHunger = 5000,
+            birdExp = 0L,
+            birdHappy = true,
+            birdHunger = 5000,
 
-                botExp = 0L,
-                botHappy = true,
-                botHunger = 5000,
+            monkeyExp = 0L,
+            monkeyHappy = true,
+            monkeyHunger = 5000,
 
-                volume = 100,
-                soundEffectOn = true,
-                musicOn = true,
-                gameSpeed = 1,
-                lastPlayedTime = System.currentTimeMillis(),
+            botExp = 0L,
+            botHappy = true,
+            botHunger = 5000,
+
+            volume = 100,
+            soundEffectOn = true,
+            musicOn = true,
+            gameSpeed = 1,
+            lastPlayedTime = System.currentTimeMillis(),
 
             )
-        )
+    )
 
 
     fun updateCookies(newCookies: Long) {
@@ -87,16 +84,50 @@ class GameViewModel(
         }
     }
 
-    fun updateCookiesPerClick(value: Long) {
-        viewModelScope.launch {
-            repository.updateCookiesPerClick(value)
-        }
+    fun getCookiesPerClick(): Long {
+
+        val currentState = gameState.value
+        return currentState.spoonLevel.toDouble().pow(2.0).toLong() * currentState.gameSpeed
+
+
     }
 
-    fun updateCookiesPerSecond(value: Long) {
-        viewModelScope.launch {
-            repository.updateCookiesPerSecond(value)
+    fun getCookiesPerSecond(): Long {
+
+        val currentState = gameState.value
+
+        fun isZero(exp: Long, hunger: Int): Long {
+            if (hunger <= 0) {
+                return 0L
+            }
+            return exp
         }
+        return (
+                isZero(
+                    currentState.blobExp,
+                    currentState.blobHunger
+                ) +
+                        isZero(
+                            currentState.fireguyExp,
+                            currentState.fireguyHunger
+                        ) +
+                        isZero(
+                            currentState.snakeExp,
+                            currentState.snakeHunger
+                        ) +
+                        isZero(
+                            currentState.birdExp,
+                            currentState.birdHunger
+                        ) +
+                        isZero(
+                            currentState.monkeyExp,
+                            currentState.monkeyHunger
+                        ) +
+                        isZero(
+                            currentState.botExp,
+                            currentState.botHunger
+                        )
+                ) * currentState.cauldronLevel * currentState.gameSpeed
     }
 
     fun updateSpoonLevel(value: Int) {
@@ -305,27 +336,110 @@ class GameViewModel(
     fun updateLastPlayedTime(value: Long) {
         viewModelScope.launch {
             repository.updateLastPlayedTime(value)
-            Log.d("d", "${value / 1000}")
         }
     }
 
-    fun offlineCalculations(){
+    fun offlineCalculations() {
+
         viewModelScope.launch {
+
             val currentTime = System.currentTimeMillis()
+
             val currentState = repository.gameFlow.first()
-            val elapsedMilliseconds = currentTime - currentState.lastPlayedTime
-            val elapsedSeconds = elapsedMilliseconds / 1000.0
 
-            val offlineEarnings = (currentState.cookiesPerSecond * elapsedSeconds).toLong()
+            val elapsedSeconds =
+                ((currentTime - currentState.lastPlayedTime) / 1000) * currentState.gameSpeed
 
-            updateCookies(currentState.totalCookies + offlineEarnings)
-            updateTotalCookiesAllTime(currentState.totalCookiesAllTime + offlineEarnings)
-            updateTotalCookiesGenerated(currentState.totalCookiesGenerated + offlineEarnings)
+            fun petOfflineProduction(
+                exp: Long,
+                hunger: Int
+            ): Long {
+
+                val activeSeconds =
+                    minOf(elapsedSeconds, hunger.toLong())
+
+                return exp * activeSeconds
+            }
+            val offlineEarnings = (
+
+                    petOfflineProduction(
+                        currentState.blobExp,
+                        currentState.blobHunger) +
+
+                            petOfflineProduction(
+                                currentState.fireguyExp,
+                                currentState.fireguyHunger
+                            ) +
+
+                            petOfflineProduction(
+                                currentState.snakeExp,
+                                currentState.snakeHunger
+                            ) +
+
+                            petOfflineProduction(
+                                currentState.birdExp,
+                                currentState.birdHunger
+                            ) +
+
+                            petOfflineProduction(
+                                currentState.monkeyExp,
+                                currentState.monkeyHunger
+                            ) +
+
+                            petOfflineProduction(
+                                currentState.botExp,
+                                currentState.botHunger
+                            )
+
+                    ) * currentState.cauldronLevel
+            updateCookies(
+                currentState.totalCookies + offlineEarnings
+            )
+            updateTotalCookiesGenerated(
+                currentState.totalCookiesGenerated + offlineEarnings
+            )
+            updateTotalCookiesAllTime(
+                currentState.totalCookiesAllTime + offlineEarnings
+            )
+            updateBlobHunger(
+                maxOf(
+                    0,
+                    currentState.blobHunger - elapsedSeconds.toInt()
+                )
+            )
+            updateFireguyHunger(
+                maxOf(
+                    0,
+                    currentState.fireguyHunger - elapsedSeconds.toInt()
+                )
+            )
+            updateSnakeHunger(
+                maxOf(
+                    0,
+                    currentState.snakeHunger - elapsedSeconds.toInt()
+                )
+            )
+            updateBirdHunger(
+                maxOf(
+                    0,
+                    currentState.birdHunger - elapsedSeconds.toInt()
+                )
+            )
+            updateMonkeyHunger(
+                maxOf(
+                    0,
+                    currentState.monkeyHunger - elapsedSeconds.toInt()
+                )
+            )
+            updateBotHunger(
+                maxOf(
+                    0,
+                    currentState.botHunger - elapsedSeconds.toInt()
+                )
+            )
             updateLastPlayedTime(currentTime)
         }
     }
-
-
 
 
 }

@@ -90,12 +90,12 @@ fun CauldronScreen(viewModel: GameViewModel = viewModel()) {
                 imageId = R.drawable.cauldron, imageSize = 200, onClick = {
                     floatingTexts = floatingTexts + FloatingText(
                         id = floatingTexts.size,
-                        text = "+${gameState.cookiesPerClick}",
+                        text = "+${viewModel.getCookiesPerClick()}",
                         position = tapPosition
                     )
-                    viewModel.updateCookies(gameState.totalCookies + gameState.cookiesPerClick)
-                    viewModel.updateTotalCookiesClicked(gameState.totalCookiesClicked + gameState.cookiesPerClick)
-                    viewModel.updateTotalCookiesAllTime(gameState.totalCookiesAllTime + gameState.cookiesPerClick)
+                    viewModel.updateCookies(gameState.totalCookies + viewModel.getCookiesPerClick())
+                    viewModel.updateTotalCookiesClicked(gameState.totalCookiesClicked + viewModel.getCookiesPerClick())
+                    viewModel.updateTotalCookiesAllTime(gameState.totalCookiesAllTime + viewModel.getCookiesPerClick())
                 })
 
             Text("Click the cauldron to bake cookies!")

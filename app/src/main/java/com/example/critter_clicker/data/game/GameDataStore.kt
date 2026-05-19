@@ -14,12 +14,6 @@ object Keys {
     val TOTAL_COOKIES =
         longPreferencesKey("totalCookies")
 
-    val COOKIES_PER_CLICK =
-        longPreferencesKey("cookiesPerClick")
-
-    val COOKIES_PER_SECOND =
-        longPreferencesKey("cookiesPerSecond")
-
     val SPOON_LEVEL =
         intPreferencesKey("spoonLevel")
 

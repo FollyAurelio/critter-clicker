@@ -75,20 +75,38 @@ class MainActivity : ComponentActivity() {
             //Calculate cookies that should have been made from the last time
 
             LaunchedEffect(
-                gameState.cookiesPerSecond
+                Unit
             ) {
 
                 while (true) {
                     delay(1000)
                     viewModel.updateCookies(
-                        gameState.totalCookies + gameState.cookiesPerSecond
+                        gameState.totalCookies + viewModel.getCookiesPerSecond()
                     )
                     viewModel.updateTotalCookiesAllTime(
-                        gameState.totalCookiesAllTime + gameState.cookiesPerSecond
+                        gameState.totalCookiesAllTime + viewModel.getCookiesPerSecond()
                     )
                     viewModel.updateTotalCookiesGenerated(
-                        gameState.totalCookiesGenerated + gameState.cookiesPerSecond
+                        gameState.totalCookiesGenerated + viewModel.getCookiesPerSecond()
                     )
+
+                    if (gameState.blobExp > 0)
+                        viewModel.updateBlobHunger(maxOf(0, gameState.blobHunger - gameState.gameSpeed))
+
+                    if (gameState.fireguyExp > 0)
+                        viewModel.updateFireguyHunger(maxOf(0, gameState.fireguyHunger - gameState.gameSpeed))
+
+                    if (gameState.snakeExp > 0)
+                        viewModel.updateSnakeHunger(maxOf(0, gameState.snakeHunger - gameState.gameSpeed))
+
+                    if (gameState.birdExp > 0)
+                        viewModel.updateBirdHunger(maxOf(0, gameState.birdHunger - gameState.gameSpeed))
+
+                    if (gameState.monkeyExp > 0)
+                        viewModel.updateMonkeyHunger(maxOf(0, gameState.monkeyHunger - gameState.gameSpeed))
+
+                    if (gameState.botExp > 0)
+                        viewModel.updateBotHunger(maxOf(0, gameState.botHunger - gameState.gameSpeed))
                 }
             }
 
@@ -142,8 +160,8 @@ class MainActivity : ComponentActivity() {
     }
 
 
-    override fun onStop(){
-        super.onStop()
+    override fun onPause(){
+        super.onPause()
         viewModel.updateLastPlayedTime(
             System.currentTimeMillis()
         )

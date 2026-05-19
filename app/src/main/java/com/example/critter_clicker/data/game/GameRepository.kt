@@ -12,10 +12,6 @@ class GameRepository(private val context: Context) {
         GameState(
             totalCookies =
                 prefs[Keys.TOTAL_COOKIES] ?: 0L,
-            cookiesPerClick =
-                prefs[Keys.COOKIES_PER_CLICK] ?: 1L,
-            cookiesPerSecond =
-                prefs[Keys.COOKIES_PER_SECOND] ?: 1L,
             spoonLevel =
                 prefs[Keys.SPOON_LEVEL] ?: 1,
             cauldronLevel =
@@ -80,17 +76,7 @@ class GameRepository(private val context: Context) {
         }
     }
 
-    suspend fun updateCookiesPerClick(value: Long) {
-        context.dataStore.edit {
-            it[Keys.COOKIES_PER_CLICK] = value
-        }
-    }
 
-    suspend fun updateCookiesPerSecond(value: Long) {
-        context.dataStore.edit {
-            it[Keys.COOKIES_PER_SECOND] = value
-        }
-    }
 
     suspend fun updateSpoonLevel(value: Int) {
         context.dataStore.edit {

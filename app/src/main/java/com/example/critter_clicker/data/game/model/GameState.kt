@@ -3,8 +3,7 @@ package com.example.critter_clicker.data.game.model
 
 data class GameState (
     val totalCookies : Long,
-    val cookiesPerClick : Long,
-    val cookiesPerSecond : Long,
+
     val spoonLevel : Int,// 1 - 5
     val cauldronLevel : Int, // 1- 5
 

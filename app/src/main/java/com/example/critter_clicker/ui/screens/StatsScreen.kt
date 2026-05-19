@@ -56,8 +56,8 @@ fun StatsScreen(viewModel: GameViewModel = viewModel()) {
         )
         HorizontalDivider()
         Text(text = "Cookies transmutted (all time) : ${gameState.totalCookiesAllTime}")
-        Text(text = "Cookies per press : ${gameState.cookiesPerClick}")
-        Text(text = "Cookies per second : ${gameState.cookiesPerSecond}")
+        Text(text = "Cookies per press : ${viewModel.getCookiesPerClick()}")
+        Text(text = "Cookies per second : ${viewModel.getCookiesPerSecond()}")
         Text(text = "Cookies generated via spoon : ${gameState.totalCookiesClicked}")
         Text(text = "Cookies generated via cauldron : ${gameState.totalCookiesGenerated}")
         Text(
