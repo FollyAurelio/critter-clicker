@@ -1,6 +1,7 @@
 package com.example.critter_clicker
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -65,6 +66,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        viewModel.offlineCalculations()
         setContent {
             //Get cookies every second
 
@@ -139,31 +141,13 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    override fun onStart(){
-        super.onStart()
-        val gameState by
-        viewModel.gameState.collectAsStateWithLifecycle()
-        val currentTime = System.currentTimeMillis()
-
-        val elapsedMilliseconds = currentTime - gameState.lastPlayedTime
-
-        val elapsedSeconds = elapsedMilliseconds / 1000
-        viewModel.updateCookies(
-            gameState.totalCookies + gameState.cookiesPerSecond * elapsedSeconds
-        )
-        viewModel.updateTotalCookiesGenerated(
-            gameState.totalCookiesGenerated + gameState.cookiesPerSecond * elapsedSeconds
-        )
-        viewModel.updateLastPlayedTime(
-            currentTime
-        )
-    }
 
     override fun onStop(){
         super.onStop()
         viewModel.updateLastPlayedTime(
             System.currentTimeMillis()
         )
+
     }
 }
 

@@ -69,7 +69,7 @@ class GameRepository(private val context: Context) {
             musicOn = prefs[Keys.MUSIC_ON] ?: true,
 
             gameSpeed = prefs[Keys.GAME_SPEED] ?: 1,
-            lastPlayedTime = prefs[Keys.LAST_PLAYED_TIME] ?: 0L
+            lastPlayedTime = prefs[Keys.LAST_PLAYED_TIME] ?: System.currentTimeMillis()
         )
     }
 
@@ -293,6 +293,9 @@ class GameRepository(private val context: Context) {
     suspend fun resetGame() {
         context.dataStore.edit {
             it.clear()
+
+            it[Keys.LAST_PLAYED_TIME] =
+                System.currentTimeMillis()
         }
     }
 

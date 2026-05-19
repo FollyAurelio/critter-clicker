@@ -1,17 +1,23 @@
 package com.example.critter_clicker.data.game
 
 import android.app.Application
+import android.util.Log
+import androidx.compose.runtime.getValue
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import com.example.critter_clicker.data.game.model.GameState
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class GameViewModel(
     application: Application
 ) : AndroidViewModel(application) {
+
 
     private val repository =
         GameRepository(application)
@@ -68,10 +74,11 @@ class GameViewModel(
                 soundEffectOn = true,
                 musicOn = true,
                 gameSpeed = 1,
-                lastPlayedTime = 0L,
+                lastPlayedTime = System.currentTimeMillis(),
 
             )
         )
+
 
     fun updateCookies(newCookies: Long) {
 
@@ -298,8 +305,27 @@ class GameViewModel(
     fun updateLastPlayedTime(value: Long) {
         viewModelScope.launch {
             repository.updateLastPlayedTime(value)
+            Log.d("d", "${value / 1000}")
         }
     }
+
+    fun offlineCalculations(){
+        viewModelScope.launch {
+            val currentTime = System.currentTimeMillis()
+            val currentState = repository.gameFlow.first()
+            val elapsedMilliseconds = currentTime - currentState.lastPlayedTime
+            val elapsedSeconds = elapsedMilliseconds / 1000.0
+
+            val offlineEarnings = (currentState.cookiesPerSecond * elapsedSeconds).toLong()
+
+            updateCookies(currentState.totalCookies + offlineEarnings)
+            updateTotalCookiesAllTime(currentState.totalCookiesAllTime + offlineEarnings)
+            updateTotalCookiesGenerated(currentState.totalCookiesGenerated + offlineEarnings)
+            updateLastPlayedTime(currentTime)
+        }
+    }
+
+
 
 
 }
