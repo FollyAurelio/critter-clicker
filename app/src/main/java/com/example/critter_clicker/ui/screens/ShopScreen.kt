@@ -154,10 +154,10 @@ fun ShopScreen(viewModel: GameViewModel = viewModel()) {
         //Spoon upgrade button
         val spoonNames =
             listOf("Bronze Spoon", "Silver Spoon", "Gold Spoon", "Platinum Spoon", "Maxed")
-        val spoonCosts = listOf(1L, 2L, 3L, 4L, 0L) //TODO : Change this
+        val spoonCosts = listOf(100L, 1000L, 10_000L, 25_000L, 50_000L)
         val cauldronNames =
             listOf("Super Cauldron", "Ultra Cauldron", "Mega Cauldron", "Hyper Cauldron", "Maxed")
-        val cauldronCosts = listOf(1L, 2L, 3L, 4L, 0L) //TODO : Change this
+        val cauldronCosts = listOf(1000L, 50_000L, 500_000L, 1_000_000L, 10_000_000L)
         ShopButton(
             spoonNames[gameState.spoonLevel - 1],
             "An even better spoon (it's not actually metal, don't worry).",
@@ -176,7 +176,7 @@ fun ShopScreen(viewModel: GameViewModel = viewModel()) {
             R.drawable.cauldron,
             cauldronCosts[gameState.cauldronLevel - 1],
             gameState.cauldronLevel < 5,
-            onBuy ={
+            onBuy = {
                 if (gameState.cauldronLevel < 5)
                     viewModel.updateCauldronLevel(gameState.cauldronLevel + 1)
             }
@@ -239,6 +239,14 @@ fun ShopScreen(viewModel: GameViewModel = viewModel()) {
             { viewModel.updateBotExp(gameState.botExp + 1) }
         )
         ShopButton(
+            "Water",
+            "Water for cookies is a perfectly even exchange, don't worry.",
+            R.drawable.water,
+            gameState.blobExp * 1,
+            gameState.blobExp > 0,
+            { viewModel.updateBlobExp(gameState.blobExp + 1) }
+        )
+        ShopButton(
             "Ball",
             "A Ball. Maybe a monkey would like to play with it.",
             R.drawable.ball,
@@ -270,7 +278,17 @@ fun ShopScreen(viewModel: GameViewModel = viewModel()) {
             gameState.fireguyExp > 0,
             { viewModel.updateFireguyExp(gameState.fireguyExp + 1) }
         )
+        ShopButton(
+            "Gears",
+            "Gears make the world go round, almost as much so than cookies.",
+            R.drawable.gear,
+            gameState.botExp * 6,
+            gameState.botExp > 0,
+            { viewModel.updateBotExp(gameState.botExp + 1) }
+        )
     }
 
 
 }
+
+
