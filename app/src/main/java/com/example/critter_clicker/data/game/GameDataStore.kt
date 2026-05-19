@@ -26,6 +26,15 @@ object Keys {
     val CAULDRON_LEVEL =
         intPreferencesKey("cauldronLevel")
 
+    val TOTAL_COOKIES_ALL_TIME =
+        longPreferencesKey("totalCookiesAllTime")
+
+    val TOTAL_COOKIES_CLICKED =
+        longPreferencesKey("totalCookiesClicked")
+
+    val TOTAL_COOKIES_GENERATED =
+        longPreferencesKey("totalCookiesGenerated")
+
     val TOTAL_BALLS =
         intPreferencesKey("totalBalls")
 

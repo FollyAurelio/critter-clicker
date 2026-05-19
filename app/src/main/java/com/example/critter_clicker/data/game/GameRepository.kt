@@ -20,6 +20,14 @@ class GameRepository(private val context : Context){
                 prefs[Keys.SPOON_LEVEL] ?: 1,
             cauldronLevel =
                 prefs[Keys.CAULDRON_LEVEL] ?: 1,
+            totalCookiesAllTime =
+                prefs[Keys.TOTAL_COOKIES_ALL_TIME] ?: 0L,
+
+            totalCookiesClicked =
+                prefs[Keys.TOTAL_COOKIES_CLICKED] ?: 0L,
+
+            totalCookiesGenerated =
+                prefs[Keys.TOTAL_COOKIES_GENERATED] ?: 0L,
             totalBalls =
                 prefs[Keys.TOTAL_BALLS] ?: 0,
             totalRings =
@@ -86,6 +94,23 @@ class GameRepository(private val context : Context){
         }
     }
 
+    suspend fun updateTotalCookiesAllTime(value: Long) {
+        context.dataStore.edit {
+            it[Keys.TOTAL_COOKIES_ALL_TIME] = value
+        }
+    }
+
+    suspend fun updateTotalCookiesClicked(value: Long) {
+        context.dataStore.edit {
+            it[Keys.TOTAL_COOKIES_CLICKED] = value
+        }
+    }
+
+    suspend fun updateTotalCookiesGenerated(value: Long) {
+        context.dataStore.edit {
+            it[Keys.TOTAL_COOKIES_GENERATED] = value
+        }
+    }
     suspend fun updateBalls(value: Int) {
         context.dataStore.edit {
             it[Keys.TOTAL_BALLS] = value

@@ -29,6 +29,11 @@ class GameViewModel(
                 cookiesPerSecond = 0L,
                 spoonLevel = 1,
                 cauldronLevel = 1,
+
+                totalCookiesAllTime = 0L,
+                totalCookiesClicked = 0L,
+                totalCookiesGenerated = 0L,
+
                 totalBalls = 0,
                 totalRings = 0,
                 totalFeather = 0,
@@ -113,6 +118,24 @@ class GameViewModel(
     fun updateCharcoal(value: Int) {
         viewModelScope.launch {
             repository.updateCharcoal(value)
+        }
+    }
+
+    fun updateTotalCookiesAllTime(value: Long) {
+        viewModelScope.launch {
+            repository.updateTotalCookiesAllTime(value)
+        }
+    }
+
+    fun updateTotalCookiesClicked(value: Long) {
+        viewModelScope.launch {
+            repository.updateTotalCookiesClicked(value)
+        }
+    }
+
+    fun updateTotalCookiesGenerated(value: Long) {
+        viewModelScope.launch {
+            repository.updateTotalCookiesGenerated(value)
         }
     }
 

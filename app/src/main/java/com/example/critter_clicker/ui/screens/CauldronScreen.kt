@@ -71,8 +71,6 @@ fun CauldronScreen(viewModel: GameViewModel = viewModel()) {
                     tapPosition = offset
 
 
-
-
                 }
             }, contentAlignment = Alignment.Center
     ) {
@@ -81,9 +79,13 @@ fun CauldronScreen(viewModel: GameViewModel = viewModel()) {
             AnimatedImageButton(
                 imageId = R.drawable.cauldron, imageSize = 200, onClick = {
                     floatingTexts = floatingTexts + FloatingText(
-                        id = floatingTexts.size, text = "+${gameState.cookiesPerClick}", position = tapPosition
+                        id = floatingTexts.size,
+                        text = "+${gameState.cookiesPerClick}",
+                        position = tapPosition
                     )
-                    viewModel.updateCookies(gameState.totalCookies + 1)
+                    viewModel.updateCookies(gameState.totalCookies + gameState.cookiesPerClick)
+                    viewModel.updateTotalCookiesClicked(gameState.totalCookiesClicked + gameState.cookiesPerClick)
+                    viewModel.updateTotalCookiesAllTime(gameState.totalCookiesAllTime + gameState.cookiesPerClick)
                 })
 
             Text("Click the cauldron to bake cookies!")

@@ -51,6 +51,7 @@ import com.example.critter_clicker.ui.components.getCookieRepresentation
 import com.example.critter_clicker.ui.screens.AppScreens
 import com.example.critter_clicker.ui.screens.CauldronScreen
 import com.example.critter_clicker.ui.screens.ShopScreen
+import com.example.critter_clicker.ui.screens.StatsScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,7 +88,7 @@ class MainActivity : ComponentActivity() {
                         }
                         //Stats screen
                         composable(route = AppScreens.Stats.name) {
-
+                            StatsScreen()
                         }
                         //Settings screen
                         composable(route = AppScreens.Settings.name) {
@@ -109,7 +110,7 @@ class MainActivity : ComponentActivity() {
 //Composable for the Top Bar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(viewModel: GameViewModel = viewModel()) {
+fun TopBar(viewModel: GameViewModel = viewModel(),) {
     val gameState by viewModel.gameState.collectAsStateWithLifecycle()
 
     CenterAlignedTopAppBar(

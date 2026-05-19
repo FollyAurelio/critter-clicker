@@ -7,6 +7,11 @@ data class GameState (
     val cookiesPerSecond : Long,
     val spoonLevel : Int,// 1 - 5
     val cauldronLevel : Int, // 1- 5
+
+    val totalCookiesAllTime : Long,
+    val totalCookiesClicked : Long,
+    val totalCookiesGenerated : Long,
+
     val totalBalls : Int,
     val totalRings : Int,
     val totalFeather : Int,
