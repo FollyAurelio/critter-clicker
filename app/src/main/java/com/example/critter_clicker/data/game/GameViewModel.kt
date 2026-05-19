@@ -61,7 +61,12 @@ class GameViewModel(
 
                 botExp = 0L,
                 botHappy = true,
-                botHunger = 5000
+                botHunger = 5000,
+
+                volume = 100,
+                soundEffectOn = true,
+                musicOn = true,
+                gameSpeed = 1,
 
             )
         )
@@ -252,6 +257,35 @@ class GameViewModel(
         }
     }
 
+    fun updateVolume(value: Int) {
+        viewModelScope.launch {
+            repository.updateVolume(value)
+        }
+    }
+
+    fun updateSoundEffectOn(value: Boolean) {
+        viewModelScope.launch {
+            repository.updateSoundEffectOn(value)
+        }
+    }
+
+    fun updateMusicOn(value: Boolean) {
+        viewModelScope.launch {
+            repository.updateMusicOn(value)
+        }
+    }
+
+    fun updateGameSpeed(value: Int) {
+        viewModelScope.launch {
+            repository.updateGameSpeed(value)
+        }
+    }
+
+    fun resetGame() {
+        viewModelScope.launch {
+            repository.resetGame()
+        }
+    }
 
 }
 

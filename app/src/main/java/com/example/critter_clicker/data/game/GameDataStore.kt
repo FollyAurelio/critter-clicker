@@ -104,6 +104,18 @@ object Keys {
 
     val BOT_HUNGER =
         intPreferencesKey("botHunger")
+
+    val VOLUME =
+        intPreferencesKey("volume")
+
+    val SOUND_EFFECT_ON =
+        booleanPreferencesKey("soundEffectOn")
+
+    val MUSIC_ON =
+        booleanPreferencesKey("musicOn")
+
+    val GAME_SPEED =
+        intPreferencesKey("gameSpeed")
 }
 
 

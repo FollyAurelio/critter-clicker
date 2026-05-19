@@ -1,6 +1,7 @@
 package com.example.critter_clicker.ui.screens
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
@@ -8,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -31,6 +33,13 @@ fun StatsScreen(viewModel: GameViewModel = viewModel()) {
                 "Mega Cauldron",
                 "Hyper Cauldron"
             )
+        Text(
+            text = "Stats",
+            fontSize = 32.sp,
+            modifier = Modifier.padding(16.dp)
+        )
+
+        HorizontalDivider()
         Text(
             "General",
             fontSize = 32.sp

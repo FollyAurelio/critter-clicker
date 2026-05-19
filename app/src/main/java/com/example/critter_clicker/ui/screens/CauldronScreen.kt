@@ -6,6 +6,8 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,6 +22,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.PointerInputScope
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -63,6 +66,12 @@ fun CauldronScreen(viewModel: GameViewModel = viewModel()) {
         mutableStateOf(listOf<FloatingText>())
     }
     //This box center aligns the cauldron and the text
+    Text(
+        text = "Cauldron",
+        fontSize = 32.sp,
+        modifier = Modifier.padding(16.dp)
+    )
+    HorizontalDivider()
     Box(
         modifier = Modifier
             .fillMaxSize()

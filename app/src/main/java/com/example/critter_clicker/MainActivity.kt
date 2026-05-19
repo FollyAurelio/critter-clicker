@@ -36,6 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -50,6 +51,7 @@ import com.example.critter_clicker.ui.components.AnimatedImageButton
 import com.example.critter_clicker.ui.components.getCookieRepresentation
 import com.example.critter_clicker.ui.screens.AppScreens
 import com.example.critter_clicker.ui.screens.CauldronScreen
+import com.example.critter_clicker.ui.screens.SettingsScreen
 import com.example.critter_clicker.ui.screens.ShopScreen
 import com.example.critter_clicker.ui.screens.StatsScreen
 
@@ -92,7 +94,7 @@ class MainActivity : ComponentActivity() {
                         }
                         //Settings screen
                         composable(route = AppScreens.Settings.name) {
-
+                            SettingsScreen()
                         }
 
 

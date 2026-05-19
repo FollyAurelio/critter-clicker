@@ -45,7 +45,12 @@ data class GameState (
     // Bot
     val botExp: Long,
     val botHappy: Boolean,
-    val botHunger: Int
+    val botHunger: Int,
+
+    val volume : Int, //0 - 100
+    val soundEffectOn : Boolean,
+    val musicOn : Boolean,
+    val gameSpeed : Int,
 
 )
 

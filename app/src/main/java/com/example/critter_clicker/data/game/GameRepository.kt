@@ -5,7 +5,7 @@ import androidx.datastore.preferences.core.edit
 import com.example.critter_clicker.data.game.model.GameState
 import kotlinx.coroutines.flow.map
 
-class GameRepository(private val context : Context){
+class GameRepository(private val context: Context) {
 
     val gameFlow = context.dataStore.data.map { prefs ->
 
@@ -59,11 +59,17 @@ class GameRepository(private val context : Context){
 
             botExp = prefs[Keys.BOT_EXP] ?: 0L,
             botHappy = prefs[Keys.BOT_HAPPY] ?: true,
-            botHunger = prefs[Keys.BOT_HUNGER] ?: 5000
+            botHunger = prefs[Keys.BOT_HUNGER] ?: 5000,
+
+            volume = prefs[Keys.VOLUME] ?: 100,
+            soundEffectOn = prefs[Keys.SOUND_EFFECT_ON] ?: true,
+            musicOn = prefs[Keys.MUSIC_ON] ?: true,
+
+            gameSpeed = prefs[Keys.GAME_SPEED] ?: 1,
         )
     }
 
-    suspend fun updateCookies(value : Long){
+    suspend fun updateCookies(value: Long) {
         context.dataStore.edit { prefs ->
 
             prefs[Keys.TOTAL_COOKIES] = value
@@ -111,6 +117,7 @@ class GameRepository(private val context : Context){
             it[Keys.TOTAL_COOKIES_GENERATED] = value
         }
     }
+
     suspend fun updateBalls(value: Int) {
         context.dataStore.edit {
             it[Keys.TOTAL_BALLS] = value
@@ -247,5 +254,38 @@ class GameRepository(private val context : Context){
             it[Keys.BOT_HUNGER] = value
         }
     }
+
+    suspend fun updateVolume(value: Int) {
+        context.dataStore.edit {
+            it[Keys.VOLUME] = value
+        }
+    }
+
+    suspend fun updateSoundEffectOn(value: Boolean) {
+        context.dataStore.edit {
+            it[Keys.SOUND_EFFECT_ON] = value
+        }
+    }
+
+    suspend fun updateMusicOn(value: Boolean) {
+        context.dataStore.edit {
+            it[Keys.MUSIC_ON] = value
+        }
+    }
+
+    suspend fun updateGameSpeed(value: Int) {
+        context.dataStore.edit {
+            it[Keys.GAME_SPEED] = value
+        }
+    }
+
+
+    suspend fun resetGame() {
+        context.dataStore.edit {
+            it.clear()
+        }
+    }
 }
+
+
 
