@@ -47,8 +47,10 @@ import com.example.critter_clicker.data.game.GameViewModel
 import com.example.critter_clicker.ui.theme.Critter_clickerTheme
 
 import com.example.critter_clicker.ui.components.AnimatedImageButton
+import com.example.critter_clicker.ui.components.getCookieRepresentation
 import com.example.critter_clicker.ui.screens.AppScreens
 import com.example.critter_clicker.ui.screens.CauldronScreen
+import com.example.critter_clicker.ui.screens.ShopScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,7 +79,7 @@ class MainActivity : ComponentActivity() {
                         }
                         //Shop screen
                         composable(route = AppScreens.Shop.name) {
-
+                            ShopScreen()
                         }
                         //Cauldron screen
                         composable(route = AppScreens.Cauldron.name) {
@@ -101,46 +103,7 @@ class MainActivity : ComponentActivity() {
 }
 
 
-fun getCookieRepresentation(
-    cookies: Long
-): Pair<String, String> {
-    if (cookies >= 1_000_000_000_000_000_000) {
-        return Pair(
-            "Quin",
-            "%.3f".format(cookies / 1_000_000_000_000_000_000f)
-        )
-    }else if (cookies >= 1_000_000_000_000_000) {
-        return Pair(
-            "Q",
-            "%.3f".format(cookies / 1_000_000_000_000_000f)
-        )
-    }else if (cookies >= 1_000_000_000_000) {
-        return Pair(
-            "T",
-            "%.3f".format(cookies / 1_000_000_000_000f)
-        )
-    }else if (cookies >= 1_000_000_000) {
-        return Pair(
-            "B",
-            "%.3f".format(cookies / 1_000_000_000f)
-        )
-    } else if (cookies >= 1_000_000) {
-        return Pair(
-            "M",
-            "%.3f".format(cookies / 1_000_000f)
-        )
-    } else if (cookies >= 1_000) {
-        return Pair(
-            "K",
-            "%.3f".format(cookies / 1_000f)
-        )
-    }
 
-    return Pair(
-        "",
-        cookies.toString()
-    )
-}
 
 
 //Composable for the Top Bar
