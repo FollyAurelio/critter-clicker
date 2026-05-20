@@ -12,6 +12,7 @@ class SoundManager(private val context: Context) {
     private val soundEffects = mutableMapOf<String, MediaPlayer>()
 
     // Play background music (loops)
+
     fun playBackgroundMusic(musicResId: Int) {
         stopBackgroundMusic()
 

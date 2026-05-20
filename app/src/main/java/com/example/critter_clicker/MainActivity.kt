@@ -76,6 +76,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         createNotificationChannel(this)
+
+
         viewModel.offlineCalculations()
         val workRequest = PeriodicWorkRequestBuilder<NotificationWorker>(24, TimeUnit.HOURS).build()
 
@@ -92,6 +94,19 @@ class MainActivity : ComponentActivity() {
             viewModel.gameState.collectAsStateWithLifecycle()
             //Calculate cookies that should have been made from the last time
 
+            LaunchedEffect(gameState.volume) {
+                viewModel.setVolume(gameState.volume)
+            }
+
+
+            LaunchedEffect(gameState.musicOn) {
+                if (gameState.musicOn) {
+                    viewModel.soundManager.stopBackgroundMusic()
+                    viewModel.soundManager.playBackgroundMusic(R.raw.bgm)
+                } else {
+                    viewModel.soundManager.stopBackgroundMusic()
+                }
+            }
             LaunchedEffect(
                 Unit
             ) {
@@ -204,7 +219,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
 //Composable for the Top Bar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -238,9 +252,9 @@ fun TopBar(viewModel: GameViewModel = viewModel()) {
 
 //Composable for the Bottom Bar
 @Composable
-fun BottomBar(navController: NavHostController) {
+fun BottomBar(navController: NavHostController, viewModel: GameViewModel = viewModel()) {
     var selected by rememberSaveable { mutableIntStateOf(3) }
-
+    val gameState by viewModel.gameState.collectAsStateWithLifecycle()
     NavigationBar {
         //Navigate to the Pets Screen
         NavigationBarItem(
@@ -251,6 +265,9 @@ fun BottomBar(navController: NavHostController) {
                 selected = 1
                 navController.navigate(AppScreens.Pets.name) {
                     popUpTo(AppScreens.Pets.name) { inclusive = true }
+                    if(gameState.soundEffectOn){
+                        viewModel.soundManager.playSoundEffect(R.raw.menu)
+                    }
                 }
             }
         )
@@ -264,6 +281,9 @@ fun BottomBar(navController: NavHostController) {
                 navController.navigate(AppScreens.Shop.name) {
                     popUpTo(AppScreens.Shop.name) { inclusive = true }
                 }
+                if(gameState.soundEffectOn){
+                    viewModel.soundManager.playSoundEffect(R.raw.menu)
+                }
             }
         )
         //Navigate to the Cauldron Screen
@@ -275,6 +295,9 @@ fun BottomBar(navController: NavHostController) {
                 selected = 3
                 navController.navigate(AppScreens.Cauldron.name) {
                     popUpTo(AppScreens.Cauldron.name) { inclusive = true }
+                }
+                if(gameState.soundEffectOn){
+                    viewModel.soundManager.playSoundEffect(R.raw.menu)
                 }
             }
         )
@@ -288,6 +311,9 @@ fun BottomBar(navController: NavHostController) {
                 navController.navigate(AppScreens.Stats.name) {
                     popUpTo(AppScreens.Stats.name) { inclusive = true }
                 }
+                if(gameState.soundEffectOn){
+                    viewModel.soundManager.playSoundEffect(R.raw.menu)
+                }
             }
         )
         //Navigate to the Settings Screen
@@ -299,6 +325,9 @@ fun BottomBar(navController: NavHostController) {
                 selected = 5
                 navController.navigate(AppScreens.Settings.name) {
                     popUpTo(AppScreens.Settings.name) { inclusive = true }
+                }
+                if(gameState.soundEffectOn){
+                    viewModel.soundManager.playSoundEffect(R.raw.menu)
                 }
             }
         )

@@ -207,6 +207,9 @@ fun FeedPetButton(
                                 "Fed $amount cookies to ${petNames[gameState.currentPet]}",
                                 Toast.LENGTH_SHORT
                             ).show()
+                            if(gameState.soundEffectOn){
+                                viewModel.soundManager.playSoundEffect(R.raw.eat)
+                            }
 
                             showFeedDialog = false
                         }

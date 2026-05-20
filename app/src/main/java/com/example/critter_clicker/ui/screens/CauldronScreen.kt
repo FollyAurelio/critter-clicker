@@ -95,6 +95,9 @@ fun CauldronScreen( viewModel: GameViewModel = viewModel()) {
                         position = tapPosition
                     )
                     viewModel.handleClick()
+                    if(gameState.soundEffectOn){
+                        viewModel.soundManager.playSoundEffect(R.raw.button_click)
+                    }
                 })
 
             Text("Click the cauldron to bake cookies!")

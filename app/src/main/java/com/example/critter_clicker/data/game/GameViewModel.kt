@@ -22,7 +22,7 @@ class GameViewModel(
     application: Application
 ) : AndroidViewModel(application) {
 
-    private val soundManager = SoundManager(application)
+    val soundManager = SoundManager(application)
 
     private val repository = GameRepository(application)
 
@@ -69,12 +69,7 @@ class GameViewModel(
             )
     )
 
-    init {
-        // Start background music
-        setVolume(gameState.value.volume)
-        if(gameState.value.musicOn)
-            soundManager.playBackgroundMusic(R.raw.bgm)
-    }
+
 
 
     fun updateCookies(newCookies: Long) {
@@ -252,6 +247,7 @@ class GameViewModel(
         viewModelScope.launch {
             repository.updateVolume(value)
         }
+        setVolume(value)
     }
 
     fun updateSoundEffectOn(value: Boolean) {
@@ -264,6 +260,7 @@ class GameViewModel(
         viewModelScope.launch {
             repository.updateMusicOn(value)
             if (value) {
+                soundManager.stopBackgroundMusic()
                 soundManager.playBackgroundMusic(R.raw.bgm)
             } else {
                 soundManager.stopBackgroundMusic()

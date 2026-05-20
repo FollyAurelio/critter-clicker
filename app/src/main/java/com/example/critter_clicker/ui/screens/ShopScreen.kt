@@ -57,6 +57,9 @@ fun ShopButton(
 
         if (itemCost <= gameState.totalCookies) {
             viewModel.updateCookies(gameState.totalCookies - itemCost)
+            if(gameState.soundEffectOn){
+                viewModel.soundManager.playSoundEffect(R.raw.cash)
+            }
             onBuy()
         } else {
             Toast.makeText(
