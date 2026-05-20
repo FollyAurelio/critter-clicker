@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.critter_clicker.R
 import com.example.critter_clicker.data.game.GameViewModel
 import com.example.critter_clicker.ui.components.AnimatedImageButton
@@ -55,8 +56,9 @@ fun DisapperingText(text: String, duration: Long, position: Offset) {
 }
 
 
+
 @Composable
-fun CauldronScreen(viewModel: GameViewModel = viewModel()) {
+fun CauldronScreen( viewModel: GameViewModel = viewModel()) {
 
     val gameState by viewModel.gameState.collectAsStateWithLifecycle()
 
@@ -65,7 +67,6 @@ fun CauldronScreen(viewModel: GameViewModel = viewModel()) {
     var floatingTexts by remember {
         mutableStateOf(listOf<FloatingText>())
     }
-
     Text(
         text = "Cauldron",
         fontSize = 32.sp,

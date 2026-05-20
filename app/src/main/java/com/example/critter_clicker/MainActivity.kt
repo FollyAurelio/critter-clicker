@@ -1,5 +1,9 @@
 package com.example.critter_clicker
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -47,10 +51,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.critter_clicker.data.game.GameViewModel
 import com.example.critter_clicker.ui.theme.Critter_clickerTheme
 
 import com.example.critter_clicker.ui.components.AnimatedImageButton
+import com.example.critter_clicker.ui.components.NotificationWorker
 import com.example.critter_clicker.ui.components.getCookieRepresentation
 import com.example.critter_clicker.ui.screens.AppScreens
 import com.example.critter_clicker.ui.screens.CauldronScreen
@@ -60,13 +68,23 @@ import com.example.critter_clicker.ui.screens.SettingsScreen
 import com.example.critter_clicker.ui.screens.ShopScreen
 import com.example.critter_clicker.ui.screens.StatsScreen
 import kotlinx.coroutines.delay
+import java.util.concurrent.TimeUnit
 
 class MainActivity : ComponentActivity() {
     private val viewModel: GameViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        createNotificationChannel(this)
         viewModel.offlineCalculations()
+        val workRequest = PeriodicWorkRequestBuilder<NotificationWorker>(24, TimeUnit.HOURS).build()
+
+        WorkManager
+            .getInstance(this)
+            .enqueueUniquePeriodicWork(
+                "critter_notifications",
+                ExistingPeriodicWorkPolicy.UPDATE,
+                workRequest)
         setContent {
             //Get cookies every second
 
@@ -159,6 +177,23 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private fun createNotificationChannel(context: Context) {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is not in the Support Library.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = context.getString(R.string.channel_name)
+            val descriptionText = context.getString(R.string.channel_description)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel("critter_channel", name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system.
+            val notificationManager: NotificationManager =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
 
     override fun onPause(){
         super.onPause()
@@ -205,6 +240,7 @@ fun TopBar(viewModel: GameViewModel = viewModel()) {
 @Composable
 fun BottomBar(navController: NavHostController) {
     var selected by rememberSaveable { mutableIntStateOf(3) }
+
     NavigationBar {
         //Navigate to the Pets Screen
         NavigationBarItem(

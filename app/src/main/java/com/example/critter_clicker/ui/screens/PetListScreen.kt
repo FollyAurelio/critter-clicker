@@ -33,6 +33,7 @@ import com.example.critter_clicker.data.game.model.PetType
 import com.example.critter_clicker.ui.components.AnimatedImageButton
 
 
+
 @Composable
 fun PetListButton(
     petId: PetType,

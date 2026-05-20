@@ -1,5 +1,7 @@
 package com.example.critter_clicker.ui.screens
 
+import android.content.Intent
+import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,14 +27,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.critter_clicker.data.game.GameViewModel
 
 @Composable
 fun SettingsScreen(
+
     viewModel: GameViewModel = viewModel()
 ) {
 
@@ -91,7 +96,17 @@ fun SettingsScreen(
         }
 
         HorizontalDivider()
+        val context = LocalContext.current
 
+        Button(
+            onClick = {
+                val intent = Intent().apply { action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
+                    putExtra(
+                        Settings.EXTRA_APP_PACKAGE,
+                        context.packageName) }
+                context.startActivity(intent) }
+        ) { Text("Enable Notifications") }
+        HorizontalDivider()
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement =

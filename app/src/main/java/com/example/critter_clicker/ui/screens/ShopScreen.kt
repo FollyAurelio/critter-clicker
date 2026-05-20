@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.critter_clicker.data.game.GameViewModel
 import com.example.critter_clicker.ui.components.AnimatedImageButton
 import com.example.critter_clicker.ui.components.getCookieRepresentation
@@ -154,10 +155,10 @@ fun ShopScreen(viewModel: GameViewModel = viewModel()) {
         //Spoon upgrade button
         val spoonNames =
             listOf("Bronze Spoon", "Silver Spoon", "Gold Spoon", "Platinum Spoon", "Maxed")
-        val spoonCosts = listOf(100L, 1000L, 10_000L, 25_000L, 50_000L)
+        val spoonCosts = listOf(100L, 1000L, 10_000L, 25_000L, 0)
         val cauldronNames =
             listOf("Super Cauldron", "Ultra Cauldron", "Mega Cauldron", "Hyper Cauldron", "Maxed")
-        val cauldronCosts = listOf(1000L, 50_000L, 500_000L, 1_000_000L, 10_000_000L)
+        val cauldronCosts = listOf(1000L, 50_000L, 500_000L, 1_000_000L,0)
         ShopButton(
             spoonNames[gameState.spoonLevel - 1],
             "An even better spoon (it's not actually metal, don't worry).",

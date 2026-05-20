@@ -1,6 +1,8 @@
 package com.example.critter_clicker.ui.screens
 
 import android.widget.Toast
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -8,7 +10,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -24,6 +28,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -33,8 +39,7 @@ import androidx.navigation.NavHostController
 import com.example.critter_clicker.R
 import com.example.critter_clicker.data.game.GameViewModel
 import com.example.critter_clicker.data.game.model.PetType
-import com.example.critter_clicker.ui.components.AnimatedImageButton
-import kotlin.collections.plus
+import kotlin.math.roundToInt
 
 
 @Composable
@@ -233,6 +238,27 @@ fun FeedPetButton(
         )
     }
 }
+
+@Composable
+fun DraggablePet(petImage: Int) {
+    var offsetX by remember { mutableStateOf(0f) }
+    var offsetY by remember { mutableStateOf(0f) }
+
+    Image(
+        painter = painterResource(id = petImage),
+        contentDescription = "Pet",
+        modifier = Modifier
+            .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
+            .size(200.dp)
+            .pointerInput(Unit) {
+                detectDragGestures { _, dragAmount ->
+                    offsetX += dragAmount.x
+                    offsetY += dragAmount.y
+                }
+            }
+    )
+}
+
 @Composable
 fun PetScreen(navController: NavHostController, viewModel: GameViewModel = viewModel()) {
 
@@ -249,6 +275,7 @@ fun PetScreen(navController: NavHostController, viewModel: GameViewModel = viewM
     )
     val petNames = listOf("", "The Blob", "Fireguy", "Snake", "Bird", "Monkey", "Bot")
     val petItems = listOf("","Water", "Charcoal", "Feather", "Ring", "Ball", "Bolts")
+
     Column(){
         Text(
             text = "Pets",
@@ -276,8 +303,8 @@ fun PetScreen(navController: NavHostController, viewModel: GameViewModel = viewM
 
             // On click, increment cookies and display text
             if(gameState.currentPet != 0) {
-                AnimatedImageButton(
-                    imageId = petImages[gameState.currentPet], imageSize = 200, onClick = {})
+                DraggablePet(
+                    petImages[gameState.currentPet],)
             }else{
                 Text(text = "No Pet!",
                     fontSize = 32.sp)

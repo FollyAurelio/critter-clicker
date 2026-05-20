@@ -1,23 +1,41 @@
 package com.example.critter_clicker.ui.screens
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.critter_clicker.data.game.GameViewModel
+import com.example.critter_clicker.ui.components.getCookieRepresentation
 
+fun shareScore(context: Context, score: Long) {
+    val shareText = "I have $score cookies in Critter Clicker! 🍪"
+
+    val shareIntent = Intent().apply {
+        action = Intent.ACTION_SEND
+        putExtra(Intent.EXTRA_TEXT, shareText)
+        type = "text/plain"
+    }
+
+    context.startActivity(Intent.createChooser(shareIntent, "Share your score"))
+}
 @Composable
 fun StatsScreen(viewModel: GameViewModel = viewModel()) {
     val gameState by viewModel.gameState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
@@ -64,6 +82,8 @@ fun StatsScreen(viewModel: GameViewModel = viewModel()) {
         Text(text = "Total Monkey exp : ${gameState.monkeyExp}")
         Text(text = "Total Bot exp : ${gameState.botExp}")
 
-
+        Button(onClick = {shareScore(context = context, gameState.totalCookies)}){
+            Text(text = "Share your Score")
+        }
     }
 }
