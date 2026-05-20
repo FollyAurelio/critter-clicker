@@ -6,7 +6,9 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
+import com.example.critter_clicker.R
 import com.example.critter_clicker.data.game.model.GameState
+import com.example.critter_clicker.ui.components.SoundManager
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
@@ -20,8 +22,10 @@ class GameViewModel(
     application: Application
 ) : AndroidViewModel(application) {
 
+    private val soundManager = SoundManager(application)
 
     private val repository = GameRepository(application)
+
 
     val gameState: StateFlow<GameState> = repository.gameFlow.stateIn(
         scope = viewModelScope, started = SharingStarted.WhileSubscribed(5000),
@@ -64,6 +68,13 @@ class GameViewModel(
 
             )
     )
+
+    init {
+        // Start background music
+        setVolume(gameState.value.volume)
+        if(gameState.value.musicOn)
+            soundManager.playBackgroundMusic(R.raw.bgm)
+    }
 
 
     fun updateCookies(newCookies: Long) {
@@ -252,6 +263,11 @@ class GameViewModel(
     fun updateMusicOn(value: Boolean) {
         viewModelScope.launch {
             repository.updateMusicOn(value)
+            if (value) {
+                soundManager.playBackgroundMusic(R.raw.bgm)
+            } else {
+                soundManager.stopBackgroundMusic()
+            }
         }
     }
 
@@ -277,10 +293,20 @@ class GameViewModel(
             val currentState = gameState.value
             updateCookies(currentState.totalCookies + getCookiesPerClick())
             updateTotalCookiesClicked(currentState.totalCookiesClicked + getCookiesPerClick())
-            updateTotalCookiesAllTime(currentState.totalCookiesAllTime + getCookiesPerClick()) // single atomic operation
+            updateTotalCookiesAllTime(currentState.totalCookiesAllTime + getCookiesPerClick())
         }
 
     }
+
+    fun setVolume(volume: Int) {
+        soundManager.setVolume(volume)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        soundManager.release()
+    }
+
 
     fun offlineCalculations() {
 
